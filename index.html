@@ -1,0 +1,1804 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BIOUND PRO - Sawa Tech</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;700;800&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --accent: #00e5a0;
+            --accent2: #3b82f6;
+            --dark: #0d1117;
+            --panel: #161b22;
+            --border: #30363d;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Syne', sans-serif;
+            background: var(--dark);
+            color: #e6edf3;
+            min-height: 100vh;
+        }
+
+        .mono {
+            font-family: 'Space Mono', monospace;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 229, 160, .015) 2px, rgba(0, 229, 160, .015) 4px);
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        .panel {
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+        }
+
+        .accent-border {
+            border-left: 3px solid var(--accent);
+        }
+
+        .badge-cat {
+            font-family: 'Space Mono', monospace;
+            font-size: 9px;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            letter-spacing: .05em;
+        }
+
+        .cat-restaurant {
+            background: #7c3aed22;
+            color: #a78bfa;
+            border: 1px solid #7c3aed44;
+        }
+
+        .cat-ecommerce {
+            background: #05966922;
+            color: #34d399;
+            border: 1px solid #05966944;
+        }
+
+        .cat-immobilier {
+            background: #d9770622;
+            color: #fb923c;
+            border: 1px solid #d9770644;
+        }
+
+        .cat-automobile {
+            background: #dc262622;
+            color: #f87171;
+            border: 1px solid #dc262644;
+        }
+
+        .cat-beaute {
+            background: #db277722;
+            color: #f472b6;
+            border: 1px solid #db277744;
+        }
+
+        .cat-sante {
+            background: #0284c722;
+            color: #38bdf8;
+            border: 1px solid #0284c744;
+        }
+
+        .cat-education {
+            background: #ca8a0422;
+            color: #fbbf24;
+            border: 1px solid #ca8a0444;
+        }
+
+        .cat-autre {
+            background: #47556922;
+            color: #94a3b8;
+            border: 1px solid #47556944;
+        }
+
+        /* BUG FIX #2 : badge OSM ajouté */
+        .src-meta {
+            background: #1877f222;
+            color: #60a5fa;
+            border: 1px solid #1877f244;
+        }
+
+        .src-osm {
+            background: #ea433522;
+            color: #f87171;
+            border: 1px solid #ea433544;
+        }
+
+        .src-manual {
+            background: #22c55e22;
+            color: #86efac;
+            border: 1px solid #22c55e44;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: #0d1117;
+            font-weight: 800;
+            font-family: 'Space Mono', monospace;
+            font-size: 11px;
+            letter-spacing: .1em;
+            padding: 10px 20px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            transition: all .2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary:hover {
+            background: #00ffb2;
+            transform: translateY(-1px);
+        }
+
+        .btn-primary:disabled {
+            opacity: .4;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-blue {
+            background: var(--accent2);
+            color: white;
+            font-weight: 800;
+            font-family: 'Space Mono', monospace;
+            font-size: 11px;
+            letter-spacing: .08em;
+            padding: 10px 20px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            transition: all .2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-blue:hover {
+            background: #2563eb;
+            transform: translateY(-1px);
+        }
+
+        .btn-blue:disabled {
+            opacity: .4;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-ghost {
+            background: transparent;
+            color: #8b949e;
+            font-family: 'Space Mono', monospace;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 8px 14px;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            cursor: pointer;
+            transition: all .2s;
+        }
+
+        .btn-ghost:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .btn-ghost:disabled {
+            opacity: .4;
+            cursor: not-allowed;
+        }
+
+        .lead-card {
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 14px 16px;
+            transition: border-color .2s;
+            animation: slideIn .3s ease-out;
+        }
+
+        .lead-card:hover {
+            border-color: #444c56;
+        }
+
+        .lead-card.analyzed {
+            border-color: #1a3a2a;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-8px)
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0)
+            }
+        }
+
+        textarea {
+            background: #0d1117;
+            color: #e6edf3;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-family: 'Space Mono', monospace;
+            font-size: 12px;
+            resize: none;
+            outline: none;
+            width: 100%;
+            padding: 12px;
+            transition: border-color .2s;
+        }
+
+        textarea:focus {
+            border-color: var(--accent);
+        }
+
+        textarea::placeholder {
+            color: #484f58;
+        }
+
+        select,
+        input[type="text"] {
+            background: #0d1117;
+            color: #e6edf3;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 8px 12px;
+            font-family: 'Syne', sans-serif;
+            font-size: 13px;
+            width: 100%;
+            outline: none;
+            transition: border-color .2s;
+        }
+
+        select:focus,
+        input[type="text"]:focus {
+            border-color: var(--accent);
+        }
+
+        option {
+            background: #161b22;
+        }
+
+        .score-bar {
+            height: 3px;
+            border-radius: 2px;
+            background: var(--border);
+            overflow: hidden;
+        }
+
+        .score-fill {
+            height: 100%;
+            border-radius: 2px;
+            background: linear-gradient(90deg, #ef4444, #f59e0b, #22c55e);
+            transition: width .6s ease;
+        }
+
+        .dot-live {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--accent);
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1
+            }
+
+            50% {
+                opacity: .3
+            }
+        }
+
+        #toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--panel);
+            border: 1px solid var(--border);
+            color: #e6edf3;
+            padding: 14px 20px;
+            border-radius: 10px;
+            font-family: 'Space Mono', monospace;
+            font-size: 12px;
+            z-index: 9998;
+            transition: all .3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            max-width: 320px;
+        }
+
+        #toast.hidden {
+            opacity: 0;
+            transform: translateY(12px);
+            pointer-events: none;
+        }
+
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--dark);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #30363d;
+            border-radius: 2px;
+        }
+
+        .email-tag {
+            font-family: 'Space Mono', monospace;
+            font-size: 9px;
+            padding: 2px 7px;
+            border-radius: 4px;
+            background: #1e3a5f22;
+            color: #60a5fa;
+            border: 1px solid #1e3a5f44;
+        }
+
+        /* Crawler progress bar */
+        #crawlerProgress {
+            transition: width .4s ease;
+        }
+
+        /* Country chip labels */
+        .country-chip-label {
+            display: inline-flex; align-items: center; gap: 4px;
+            padding: 4px 10px; border-radius: 6px;
+            background: #161b22; border: 1px solid #30363d;
+            color: #8b949e; font-size: 11px; cursor: pointer;
+            font-family: 'JetBrains Mono', monospace;
+            transition: all .2s;
+        }
+        .country-chip-label:has(input:checked) {
+            background: #0d1f17; border-color: #00e5a0;
+            color: #00e5a0; box-shadow: 0 0 6px #00e5a022;
+        }
+        .country-chip-label input { display: none; }
+
+        /* Scheduler panel */
+        .sched-dot {
+            width: 7px; height: 7px;
+            border-radius: 50%;
+            background: var(--accent);
+            animation: pulse 2s infinite;
+            flex-shrink: 0;
+        }
+        .sched-dot.off { background: #f87171; animation: none; }
+        .country-chip {
+            font-family: 'Space Mono', monospace;
+            font-size: 9px;
+            padding: 2px 7px;
+            border-radius: 4px;
+            background: #00e5a022;
+            color: var(--accent);
+            border: 1px solid #00e5a044;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav style="background:var(--panel);border-bottom:1px solid var(--border);" class="sticky top-0 z-50 px-6 py-3">
+        <div class="max-w-4xl mx-auto flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <div class="dot-live"></div>
+                <span class="font-bold text-lg tracking-widest" style="color:var(--accent);">BIOUND</span>
+                <span style="color:#8b949e;font-size:11px;" class="mono">PRO v5.3</span>
+            </div>
+            <div class="flex items-center gap-3">
+                <span style="color:#484f58;font-size:10px;" class="mono">SAWA TECH EDITION</span>
+                <div class="flex items-center gap-2">
+                    <div class="hidden sm:flex items-center gap-2 px-3 py-1 rounded-full border border-[#30363d] bg-[#0d1117] mr-2" title="Crédits Scraping (Illimités en Démo)">
+                        <i class="fa-solid fa-bolt text-[#eab308] text-xs"></i>
+                        <span class="mono text-[10px] text-[#e6edf3]">CRÉDITS: <span class="text-[#eab308]">ILLIMITÉS</span></span>
+                    </div>
+                    <div id="stopGlobalBtn" class="hidden">
+                        <button onclick="stopAllOperations()" class="btn-ghost"
+                            style="color:#f87171;border-color:#ef444444;background:#ef444411;padding:4px 10px;animation:pulse 2s infinite;">
+                            <i class="fa-solid fa-circle-stop mr-1"></i> ARRÊTER
+                        </button>
+                    </div>
+                    <div class="flex items-center gap-2 px-3 py-1 rounded-full border border-[#30363d] bg-[#161b22]">
+                        <div class="status-dot"></div>
+                        <span id="tokenStatus" class="mono text-[10px]" style="color:#8b949e;">CHECKING...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-4xl mx-auto px-4 py-6 space-y-4 pb-24">
+
+        <!-- SCHEDULER PANEL -->
+        <div class="panel p-4" style="border-left:3px solid #7c3aed;">
+            <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-3">
+                <!-- Status -->
+                <div class="flex items-center gap-3">
+                    <div id="schedDot" class="sched-dot off"></div>
+                    <div>
+                        <div class="mono font-bold text-sm" style="color:#a78bfa;">SCHEDULER AUTONOME</div>
+                        <div id="schedNextRun" class="mono text-xs" style="color:#8b949e;">Chargement...</div>
+                    </div>
+                </div>
+                <!-- Config rapide -->
+                <div class="flex items-center gap-2 flex-wrap">
+                    <span class="mono text-xs" style="color:#8b949e;">HEURE :</span>
+                    <input type="number" id="schedHour" min="0" max="23" value="8" style="width:54px;background:#0d1117;color:#e6edf3;border:1px solid #30363d;border-radius:6px;padding:4px 8px;font-family:'Space Mono',monospace;font-size:11px;">
+                    <span class="mono text-xs" style="color:#8b949e;">h</span>
+                    <input type="number" id="schedMinute" min="0" max="59" value="0" style="width:54px;background:#0d1117;color:#e6edf3;border:1px solid #30363d;border-radius:6px;padding:4px 8px;font-family:'Space Mono',monospace;font-size:11px;">
+                    <button onclick="saveSchedulerConfig()" class="btn-ghost text-xs" style="color:#a78bfa;border-color:#7c3aed44;">
+                        <i class="fa-solid fa-floppy-disk mr-1"></i>SAUVER
+                    </button>
+                    <button onclick="triggerSchedulerNow()" id="triggerBtn" class="btn-ghost text-xs" style="color:var(--accent);border-color:#00e5a044;">
+                        <i class="fa-solid fa-bolt mr-1"></i>LANCER
+                    </button>
+                </div>
+            </div>
+            <!-- Pays actifs -->
+            <div id="schedCountries" class="flex gap-2 mt-3 flex-wrap"></div>
+        </div>
+
+        <!-- DASHBOARD STATS -->
+        <div class="panel p-5" id="dashboardPanel">
+            <div class="flex justify-between items-center mb-4">
+                <div class="mono font-bold text-sm" style="color:#e6edf3;">
+                    <i class="fa-solid fa-chart-line mr-2" style="color:#00e5a0;"></i>DASHBOARD ACTIVITÉ
+                </div>
+                <button onclick="loadDashboard()" class="btn-ghost text-xs" style="color:#8b949e;">
+                    <i class="fa-solid fa-rotate-right mr-1"></i>ACTUALISER
+                </button>
+            </div>
+            <!-- KPIs -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-5">
+                <div class="p-3 rounded-lg text-center" style="background:#0d1117;border:1px solid #21262d;">
+                    <div class="mono font-bold text-2xl" id="kpi-total" style="color:var(--accent);">0</div>
+                    <div class="mono text-xs mt-1" style="color:#8b949e;">TOTAL LEADS</div>
+                </div>
+                <div class="p-3 rounded-lg text-center" style="background:#0d1117;border:1px solid #21262d;">
+                    <div class="mono font-bold text-2xl" id="kpi-analysis" style="color:var(--accent2);">0%</div>
+                    <div class="mono text-xs mt-1" style="color:#8b949e;">TAUX ANALYSE</div>
+                </div>
+                <div class="p-3 rounded-lg text-center" style="background:#0d1117;border:1px solid #21262d;">
+                    <div class="mono font-bold text-2xl" id="kpi-email" style="color:#60a5fa;">0%</div>
+                    <div class="mono text-xs mt-1" style="color:#8b949e;">TAUX EMAIL</div>
+                </div>
+                <div class="p-3 rounded-lg text-center" style="background:#0d1117;border:1px solid #21262d;">
+                    <div class="mono font-bold text-2xl" id="kpi-conversion" style="color:#34d399;">0%</div>
+                    <div class="mono text-xs mt-1" style="color:#8b949e;">CONVERSION</div>
+                </div>
+            </div>
+            <!-- Pipeline + Sparkline -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-5">
+                <div>
+                    <div class="mono text-xs mb-3" style="color:#8b949e;">PIPELINE</div>
+                    <div class="space-y-2" id="pipelineBars">
+                        <div class="flex items-center gap-3">
+                            <span class="mono text-xs" style="color:#94a3b8;min-width:60px;text-align:right;">Nouveau</span>
+                            <div class="flex-1 score-bar" style="height:8px;"><div class="score-fill" id="pipe-bar-nouveau" style="width:0%;background:#3b82f6;transition:width .6s;"></div></div>
+                            <span class="mono text-xs" id="pipe-n-nouveau" style="color:#e6edf3;min-width:24px;">0</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <span class="mono text-xs" style="color:#94a3b8;min-width:60px;text-align:right;">Contacté</span>
+                            <div class="flex-1 score-bar" style="height:8px;"><div class="score-fill" id="pipe-bar-contacte" style="width:0%;background:#f59e0b;transition:width .6s;"></div></div>
+                            <span class="mono text-xs" id="pipe-n-contacte" style="color:#e6edf3;min-width:24px;">0</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <span class="mono text-xs" style="color:#94a3b8;min-width:60px;text-align:right;">Répondu</span>
+                            <div class="flex-1 score-bar" style="height:8px;"><div class="score-fill" id="pipe-bar-repondu" style="width:0%;background:#a78bfa;transition:width .6s;"></div></div>
+                            <span class="mono text-xs" id="pipe-n-repondu" style="color:#e6edf3;min-width:24px;">0</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <span class="mono text-xs" style="color:#94a3b8;min-width:60px;text-align:right;">Converti</span>
+                            <div class="flex-1 score-bar" style="height:8px;"><div class="score-fill" id="pipe-bar-converti" style="width:0%;background:#22c55e;transition:width .6s;"></div></div>
+                            <span class="mono text-xs" id="pipe-n-converti" style="color:#e6edf3;min-width:24px;">0</span>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="mono text-xs mb-2" style="color:#8b949e;">LEADS / JOUR (7j)</div>
+                    <canvas id="sparkCanvas" style="width:100%;height:72px;display:block;"></canvas>
+                    <div class="flex justify-between mono" id="sparkLabels" style="font-size:9px;color:#484f58;margin-top:4px;"></div>
+                </div>
+            </div>
+            <!-- Catégories + Top leads -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <div class="mono text-xs mb-3" style="color:#8b949e;">PAR CATÉGORIE</div>
+                    <div class="space-y-2" id="catBars"></div>
+                </div>
+                <div>
+                    <div class="mono text-xs mb-3" style="color:#8b949e;">TOP 5 LEADS (score IA)</div>
+                    <div class="space-y-2" id="topLeadsList"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CONFIG -->
+        <div class="panel accent-border p-5">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                <div>
+                    <label class="block mono text-xs mb-2" style="color:#8b949e;">PAYS CIBLE</label>
+                    <select id="targetCountry" onchange="saveConfig()" class="hidden">
+                        <option value="CM">CM</option>
+                    </select>
+                    <div id="countryChips" class="flex flex-wrap gap-2">
+                        <label class="country-chip-label"><input type="checkbox" name="cc" value="CM" checked onchange="syncCountries()"> 🇨🇲 CM</label>
+                        <label class="country-chip-label"><input type="checkbox" name="cc" value="CI" onchange="syncCountries()"> 🇨🇮 CI</label>
+                        <label class="country-chip-label"><input type="checkbox" name="cc" value="SN" onchange="syncCountries()"> 🇸🇳 SN</label>
+                        <label class="country-chip-label"><input type="checkbox" name="cc" value="CD" onchange="syncCountries()"> 🇨🇩 CD</label>
+                        <label class="country-chip-label"><input type="checkbox" name="cc" value="GA" onchange="syncCountries()"> 🇬🇦 GA</label>
+                        <label class="country-chip-label"><input type="checkbox" name="cc" value="TG" onchange="syncCountries()"> 🇹🇬 TG</label>
+                        <label class="country-chip-label"><input type="checkbox" name="cc" value="BJ" onchange="syncCountries()"> 🇧🇯 BJ</label>
+                        <label class="country-chip-label"><input type="checkbox" name="cc" value="ML" onchange="syncCountries()"> 🇲🇱 ML</label>
+                        <span style="border-left:1px solid #30363d;margin:0 4px;"></span>
+                        <label class="country-chip-label"><input type="checkbox" name="cc" value="FR" onchange="syncCountries()"> 🇫🇷 FR</label>
+                        <label class="country-chip-label"><input type="checkbox" name="cc" value="BE" onchange="syncCountries()"> 🇧🇪 BE</label>
+                        <label class="country-chip-label"><input type="checkbox" name="cc" value="CA" onchange="syncCountries()"> 🇨🇦 CA</label>
+                        <label class="country-chip-label"><input type="checkbox" name="cc" value="CH" onchange="syncCountries()"> 🇨🇭 CH</label>
+                </div>
+                <div>
+                    <label class="block mono text-xs mb-2" style="color:#8b949e;">CIVILITÉ</label>
+                    <select id="userCivility" onchange="saveConfig()">
+                        <option value="Monsieur">Monsieur</option>
+                        <option value="Madame">Madame</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block mono text-xs mb-2" style="color:#8b949e;">VOTRE NOM</label>
+                    <input type="text" id="userName" placeholder="Entrez votre nom..." oninput="saveConfig()">
+                </div>
+            </div>
+            <details class="group" style="border-top:1px solid var(--border);padding-top:14px;">
+                <summary class="cursor-pointer list-none text-sm font-bold flex justify-between items-center"
+                    style="color:#8b949e;">
+                    <span><i class="fa-brands fa-whatsapp mr-2" style="color:#25d366;"></i>MODÈLE DE MESSAGE</span>
+                    <i class="fa-solid fa-chevron-down text-xs transition group-open:rotate-180"></i>
+                </summary>
+                <textarea id="messageTemplate" class="mt-3 h-32" oninput="saveConfig()"
+                    placeholder="Votre message..."></textarea>
+            <details class="group mt-3" style="border-top:1px solid rgba(255,255,255,0.05);padding-top:14px;">
+                <summary class="cursor-pointer list-none text-sm font-bold flex justify-between items-center" style="color:#8b949e;">
+                    <div class="flex items-center gap-2">
+                        <i class="fa-solid fa-bolt text-[#00e5a0]"></i>
+                        <span>AUTOMATISATIONS (Zapier/Make)</span>
+                        <span class="mono text-[9px] bg-[#00e5a022] text-[#00e5a0] px-2 py-0.5 rounded ml-2">PRO</span>
+                    </div>
+                    <i class="fa-solid fa-chevron-down text-xs transition group-open:rotate-180"></i>
+                </summary>
+                <div class="mt-4 bg-[#0d1117] border border-[#30363d] rounded-lg p-4">
+                    <label class="block mono text-xs mb-2 text-[#8b949e]">URL DU WEBHOOK (POST)</label>
+                    <div class="flex gap-2">
+                        <input type="text" placeholder="https://hooks.zapier.com/hooks/catch/..." class="opacity-50" disabled>
+                        <button class="btn-ghost" disabled>TESTER</button>
+                    </div>
+                    <p class="text-[10px] text-[#8b949e] mt-2"><i class="fa-solid fa-info-circle mr-1"></i> Disponible uniquement dans la version payante. Exporte automatiquement les leads convertis vers votre CRM CRM (Hubspot, Pipedrive, etc).</p>
+                </div>
+            </details>
+        </div>
+
+        <!-- HUNTER PANEL -->
+        <div class="panel p-4">
+            <div class="flex gap-3 mb-4 flex-wrap">
+                <button onclick="startAutoHunt()" id="huntBtn" class="btn-primary flex-1">
+                    <i class="fa-brands fa-facebook"></i> FB ADS HUNTER
+                </button>
+                <button onclick="startMapsHunt()" id="mapsBtn" class="btn-blue flex-1">
+                    <i class="fa-solid fa-map-location-dot"></i> OSM HUNTER
+                </button>
+                <button onclick="startEmailCrawl()" id="crawlBtn" class="btn-ghost flex-1"
+                    style="color:#60a5fa;border-color:#1877f244;">
+                    <i class="fa-solid fa-envelope-open-text mr-1"></i> EMAIL CRAWLER
+                </button>
+                <button onclick="startAnnuaireHunt()" id="annuaireBtn" class="btn-ghost flex-1"
+                    style="color:#f59e0b;border-color:#f59e0b44;">
+                    <i class="fa-solid fa-book mr-1"></i> ANNUAIRE
+                </button>
+            </div>
+            <!-- Barre de progression crawler -->
+            <div id="crawlerBar" class="hidden mb-3">
+                <div class="flex justify-between items-center mb-1">
+                    <span class="mono text-xs" style="color:#8b949e;">CRAWL EN COURS...</span>
+                    <span class="mono text-xs" id="crawlerCount" style="color:#60a5fa;">0 / 0</span>
+                </div>
+                <div class="score-bar" style="height:4px;">
+                    <div id="crawlerProgress" class="score-fill"
+                        style="width:0%; background:linear-gradient(90deg,#3b82f6,#00e5a0);"></div>
+                </div>
+            </div>
+            <div>
+                <label class="block mono text-xs mb-2" style="color:#8b949e;">SAISIE MANUELLE (copier-coller)</label>
+                <textarea id="rawInput" class="h-24"
+                    placeholder="Collez le texte brut ici pour extraire les contacts..."></textarea>
+            </div>
+            <div class="flex gap-2 mt-3">
+                <button onclick="clearInput()" class="btn-ghost"><i class="fa-solid fa-trash mr-1"></i> VIDER</button>
+                <button onclick="processText()" class="btn-primary flex-1">
+                    <i class="fa-solid fa-magnifying-glass-chart"></i> ANALYSER LES LEADS
+                </button>
+            </div>
+        </div>
+
+        <!-- RÉSULTATS -->
+        <div id="resultsArea" class="hidden">
+            <div class="panel p-3 mb-3 flex flex-col md:flex-row items-center justify-between gap-3">
+                <div class="flex items-center gap-4">
+                    <div class="flex items-center gap-2">
+                        <span class="mono font-bold text-lg" id="countBadge" style="color:var(--accent);">0</span>
+                        <span class="mono text-xs" style="color:#8b949e;">CONTACTS</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="mono font-bold text-lg" id="analyzedBadge" style="color:var(--accent2);">0</span>
+                        <span class="mono text-xs" style="color:#8b949e;">ANALYSÉS</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="mono font-bold text-lg" id="emailBadge" style="color:#60a5fa;">0</span>
+                        <span class="mono text-xs" style="color:#8b949e;">EMAILS</span>
+                    </div>
+                </div>
+                <div class="flex gap-2 w-full md:w-auto flex-wrap">
+                    <button onclick="analyzeAllPending()" id="analyzeAllBtn" class="btn-ghost flex-1">
+                        <i class="fa-solid fa-microchip mr-1"></i> ANALYSER TOUT
+                    </button>
+                    <button onclick="exportCSV()" class="btn-ghost flex-1">
+                        <i class="fa-solid fa-file-csv mr-1"></i> EXPORT CSV
+                    </button>
+                    <button onclick="sendAuto()" class="btn-primary flex-1">
+                        <i class="fa-solid fa-paper-plane"></i> ENVOI AUTO
+                    </button>
+                </div>
+            </div>
+            <div class="flex gap-2 mb-3 flex-wrap" id="categoryFilters">
+                <button onclick="filterBy('all')" class="filter-btn btn-ghost" data-cat="all">TOUS</button>
+            </div>
+            <div id="leadsList" class="space-y-2"></div>
+        </div>
+
+        <div id="emptyState" class="text-center py-16">
+            <div class="max-w-xl mx-auto panel p-8 relative overflow-hidden" style="border-color: rgba(0,229,160,0.3);">
+                <!-- Decorative background elements -->
+                <div class="absolute top-0 right-0 w-32 h-32 bg-[#00e5a0] rounded-full blur-[80px] opacity-20 -z-10"></div>
+                <div class="absolute bottom-0 left-0 w-32 h-32 bg-[#3b82f6] rounded-full blur-[80px] opacity-20 -z-10"></div>
+                
+                <div class="w-16 h-16 rounded-2xl bg-[#00e5a011] border border-[#00e5a044] text-[#00e5a0] flex items-center justify-center text-3xl mb-6 mx-auto animate-bounce" style="animation-duration: 3s;">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+                </div>
+                
+                <h3 class="text-2xl font-bold mb-3">Bienvenue sur votre Dashboard SaaS</h3>
+                <p class="text-[#8b949e] text-sm mb-8 leading-relaxed">
+                    Vous êtes prêt à trouver vos premiers leads B2B automatisés. Choisissez un moteur de recherche ci-haut, ou lancez un scan rapide ci-dessous pour tester.
+                </p>
+                
+                <div class="grid sm:grid-cols-2 gap-4 text-left">
+                    <button onclick="document.getElementById('huntBtn').click()" class="p-4 rounded-xl border border-[#30363d] bg-[#0d1117] hover:border-[#3b82f6] transition group text-left">
+                        <div class="flex items-center gap-3 mb-2">
+                            <i class="fa-brands fa-facebook text-[#3b82f6] text-xl group-hover:scale-110 transition"></i>
+                            <span class="font-bold text-sm text-[#e6edf3]">Scan Meta Ads</span>
+                        </div>
+                        <p class="text-xs text-[#8b949e]">Trouvez qui dépense en publicité en ce moment même.</p>
+                    </button>
+                    
+                    <button onclick="document.getElementById('mapsBtn').click()" class="p-4 rounded-xl border border-[#30363d] bg-[#0d1117] hover:border-[#f87171] transition group text-left">
+                        <div class="flex items-center gap-3 mb-2">
+                            <i class="fa-solid fa-map-location-dot text-[#f87171] text-xl group-hover:scale-110 transition"></i>
+                            <span class="font-bold text-sm text-[#e6edf3]">Scan Local (OSM)</span>
+                        </div>
+                        <p class="text-xs text-[#8b949e]">Trouvez des boutiques physiques (Restos, Boutiques) par ville.</p>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <div id="toast" class="hidden">
+        <i id="toastIcon" class="fa-solid fa-circle-info" style="color:var(--accent);"></i>
+        <span id="toastMsg"></span>
+    </div>
+
+    <script>
+        const COUNTRY_CONFIG = {
+            // Afrique
+            'CM': { code: '237', length: 9,  regex: /^6[2456789]\d{7}$/ },
+            'CI': { code: '225', length: 10, regex: /^(01|05|07)\d{8}$/ },
+            'SN': { code: '221', length: 9,  regex: /^7[05678]\d{7}$/ },
+            'CD': { code: '243', length: 9,  regex: /^[89]\d{8}$/ },
+            'GA': { code: '241', length: 8,  regex: /^\d{7,8}$/ },
+            'TG': { code: '228', length: 8,  regex: /^[279]\d{7}$/ },
+            'BJ': { code: '229', length: 8,  regex: /^\d{8}$/ },
+            'ML': { code: '223', length: 8,  regex: /^[2567]\d{7}$/ },
+            // Europe & Canada
+            'FR': { code: '33',  length: 9,  regex: /^[1-9]\d{8}$/ },
+            'BE': { code: '32',  length: 9,  regex: /^[1-9]\d{7,8}$/ },
+            'CA': { code: '1',   length: 10, regex: /^\d{10}$/ },
+            'CH': { code: '41',  length: 9,  regex: /^[1-9]\d{8}$/ },
+        };
+        const CATEGORY_COLORS = {
+            restaurant: 'cat-restaurant', ecommerce: 'cat-ecommerce', immobilier: 'cat-immobilier',
+            automobile: 'cat-automobile', beaute: 'cat-beaute', sante: 'cat-sante',
+            education: 'cat-education', autre: 'cat-autre'
+        };
+        const SERVICE_LABELS = {
+            site_web: '🌐 Site web', identite_visuelle: '🎨 Identité visuelle',
+            call_center: '📞 Call center', reseaux_sociaux: '📱 Réseaux sociaux',
+            publicite_meta: '🎯 Pub Meta', autre: '💼 Service'
+        };
+
+        let leadsData = [];
+        let activeFilter = 'all';
+        const DEFAULT_MSG = "Bonjour [BOUTIQUE], j'ai vu votre activité. Je suis [CIVILITE] [NOM] de Sawa Tech. Nous aidons les business comme le vôtre à développer leur présence en ligne. Disponible pour en discuter ?";
+
+        // ============================================================
+        // INIT
+        // ============================================================
+        window.onload = () => {
+            document.getElementById('userCivility').value = localStorage.getItem('biound_civility') || 'Monsieur';
+            document.getElementById('userName').value = localStorage.getItem('biound_name') || '';
+            document.getElementById('messageTemplate').value = localStorage.getItem('biound_template') || DEFAULT_MSG;
+            
+            // Restore saved country selections
+            try {
+                const saved = JSON.parse(localStorage.getItem('biound_countries') || '["CM"]');
+                document.querySelectorAll('input[name=cc]').forEach(cb => {
+                    cb.checked = saved.includes(cb.value);
+                });
+            } catch(e) {}
+            syncCountries();
+            
+            checkTokenStatus();
+            loadSchedulerStatus();
+            loadDashboard();
+            loadLeadsFromDB();
+        };
+
+        // ============================================================
+        // DASHBOARD
+        // ============================================================
+        let currentController = null;
+        let isHunting = false;
+
+        async function loadDashboard() {
+            const country = getSelectedCountries().join(',');
+            try {
+                const r = await fetch(`http://localhost:5000/api/dashboard?country=${country}`);
+                const d = await r.json();
+                console.log("Dashboard Data:", d);
+
+                // KPIs
+                const totalEl = document.getElementById('kpi-total');
+                if (totalEl) totalEl.textContent = d.total || 0;
+                
+                document.getElementById('kpi-analysis').textContent   = (d.rate_analysis || 0) + '%';
+                document.getElementById('kpi-email').textContent      = (d.rate_email || 0) + '%';
+                document.getElementById('kpi-conversion').textContent = (d.rate_conversion || 0) + '%';
+
+                // Pipeline bars (relative au total)
+                const pipeMax = Math.max(d.total, 1);
+                const pipes = [
+                    { key: 'Nouveau',  id: 'nouveau'  },
+                    { key: 'Contact\u00e9', id: 'contacte' },
+                    { key: 'R\u00e9pondu',  id: 'repondu'  },
+                    { key: 'Converti', id: 'converti' },
+                ];
+                pipes.forEach(({ key, id }) => {
+                    const n   = d.pipeline[key] || 0;
+                    const pct = Math.round(n / pipeMax * 100);
+                    setTimeout(() => {
+                        const bar = document.getElementById(`pipe-bar-${id}`);
+                        if (bar) bar.style.width = pct + '%';
+                    }, 150);
+                    const lbl = document.getElementById(`pipe-n-${id}`);
+                    if (lbl) lbl.textContent = n;
+                });
+
+                // Sparkline canvas
+                drawSparkline(d.history);
+
+                // Catégories -> Mettre à jour les filtres aussi
+                const catBars = document.getElementById('catBars');
+                catBars.innerHTML = '';
+                const filterContainer = document.getElementById('categoryFilters');
+                // Garder "TOUS" par défaut
+                filterContainer.innerHTML = '<button onclick="filterBy(\'all\')" class="filter-btn btn-ghost" data-cat="all">TOUS</button>';
+
+                const maxCat = Math.max(...d.by_category.map(c => c.count), 1);
+                d.by_category.forEach(({ cat, count }) => {
+                    if (!cat) return;
+                    const pct = Math.round(count / maxCat * 100);
+                    catBars.innerHTML += `
+                        <div class="flex items-center gap-2">
+                            <span class="mono" style="font-size:9px;color:#8b949e;min-width:72px;text-align:right;">${cat}</span>
+                            <div class="flex-1 score-bar" style="height:6px;">
+                                <div class="score-fill" style="width:${pct}%;background:#00e5a0;transition:width .5s;"></div>
+                            </div>
+                            <span class="mono" style="font-size:10px;color:#e6edf3;min-width:20px;">${count}</span>
+                        </div>`;
+                    
+                    // Bouton filtre dans la zone résultats
+                    updateCategoryFilter(cat);
+                });
+
+                // Top leads
+                const topList = document.getElementById('topLeadsList');
+                topList.innerHTML = '';
+                if (!d.top_leads.length) {
+                    topList.innerHTML = '<div class="mono text-xs" style="color:#484f58;">Aucun lead analys\u00e9 pour l\'instant.</div>';
+                }
+                d.top_leads.forEach(l => {
+                    const scoreColor = l.ai_score >= 7 ? '#34d399' : l.ai_score >= 4 ? '#fbbf24' : '#f87171';
+                    topList.innerHTML += `
+                        <div class="flex items-center gap-2" style="background:#0d1117;border:1px solid #21262d;border-radius:6px;padding:6px 10px;">
+                            <span class="mono font-bold" style="color:${scoreColor};font-size:13px;min-width:28px;">${l.ai_score}</span>
+                            <div class="flex-1 min-w-0">
+                                <div class="mono text-xs truncate" style="color:#e6edf3;">${l.number}</div>
+                                <div class="mono" style="font-size:9px;color:#8b949e;">${l.category || 'autre'} ${l.email ? '\ud83d\udce7' : ''}</div>
+                            </div>
+                            <span class="badge-cat" style="font-size:9px;padding:1px 6px;border-radius:4px;background:#21262d;color:#8b949e;">${l.status}</span>
+                        </div>`;
+                });
+
+            } catch (e) { console.warn('Dashboard non disponible :', e); }
+        }
+
+        function drawSparkline(history) {
+            const canvas = document.getElementById('sparkCanvas');
+            if (!canvas) return;
+
+            // Fixer la r\u00e9solution physique
+            const W = canvas.offsetWidth || 300;
+            const H = 72;
+            canvas.width  = W * window.devicePixelRatio;
+            canvas.height = H * window.devicePixelRatio;
+            canvas.style.width  = W + 'px';
+            canvas.style.height = H + 'px';
+
+            const ctx = canvas.getContext('2d');
+            ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+            ctx.clearRect(0, 0, W, H);
+
+            const counts = history.map(d => d.count);
+            const maxV   = Math.max(...counts, 1);
+            const padX   = 6, padY = 8;
+            const stepX  = (W - padX * 2) / (counts.length - 1);
+
+            const points = counts.map((v, i) => ({
+                x: padX + i * stepX,
+                y: H - padY - ((v / maxV) * (H - padY * 2))
+            }));
+
+            // Fill gradient sous la courbe
+            const grad = ctx.createLinearGradient(0, 0, 0, H);
+            grad.addColorStop(0, 'rgba(0,229,160,.35)');
+            grad.addColorStop(1, 'rgba(0,229,160,0)');
+
+            ctx.beginPath();
+            ctx.moveTo(points[0].x, H - padY);
+            points.forEach(p => ctx.lineTo(p.x, p.y));
+            ctx.lineTo(points[points.length - 1].x, H - padY);
+            ctx.closePath();
+            ctx.fillStyle = grad;
+            ctx.fill();
+
+            // Ligne principale
+            ctx.beginPath();
+            ctx.moveTo(points[0].x, points[0].y);
+            for (let i = 1; i < points.length; i++) {
+                const mx = (points[i-1].x + points[i].x) / 2;
+                ctx.bezierCurveTo(mx, points[i-1].y, mx, points[i].y, points[i].x, points[i].y);
+            }
+            ctx.strokeStyle = '#00e5a0';
+            ctx.lineWidth   = 2;
+            ctx.stroke();
+
+            // Points
+            points.forEach(p => {
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, 3, 0, Math.PI * 2);
+                ctx.fillStyle   = '#00e5a0';
+                ctx.strokeStyle = '#0d1117';
+                ctx.lineWidth   = 1.5;
+                ctx.fill();
+                ctx.stroke();
+            });
+
+            // Labels axes X (lundi, mardi...)
+            const labels = document.getElementById('sparkLabels');
+            labels.innerHTML = history.map(d => {
+                const dt  = new Date(d.date + 'T00:00:00');
+                const lbl = dt.toLocaleDateString('fr-FR', { weekday: 'short' });
+                return `<span>${lbl}<br><b>${d.count}</b></span>`;
+            }).join('');
+        }
+
+
+        // BUG FIX #3 : filtre pays dans l'URL
+        async function loadLeadsFromDB(category = 'all') {
+            const country = getSelectedCountries().join(',');
+            activeFilter = category;
+            try {
+                const r = await fetch(`http://localhost:5000/api/leads?country=${country}&category=${category}`);
+                const data = await r.json();
+                leadsData = data;
+                document.getElementById('leadsList').innerHTML = '';
+                leadsData.forEach((lead, i) => {
+                    lead.analyzed = !!lead.analyzed;
+                    renderLeadCard(lead, i, true);
+                });
+                updateStats();
+                
+                // Mettre à jour l'apparence des boutons de filtre
+                document.querySelectorAll('.filter-btn').forEach(b => {
+                    const isMatch = b.dataset.cat === category;
+                    b.style.borderColor = isMatch ? 'var(--accent)' : '';
+                    b.style.color = isMatch ? 'var(--accent)' : '';
+                    b.style.background = isMatch ? '#00e5a011' : '';
+                });
+
+                if (leadsData.length > 0) {
+                    document.getElementById('resultsArea').classList.remove('hidden');
+                    document.getElementById('emptyState').classList.add('hidden');
+                } else if (category === 'all') {
+                    document.getElementById('resultsArea').classList.add('hidden');
+                    document.getElementById('emptyState').classList.remove('hidden');
+                }
+            } catch (e) { console.warn('Erreur chargement DB:', e); }
+        }
+
+        async function checkTokenStatus() {
+            try {
+                await fetch('http://localhost:5000/');
+                document.getElementById('tokenStatus').style.color = '#00e5a0';
+                document.getElementById('tokenStatus').textContent = 'SERVER OK';
+                document.getElementById('stopGlobalBtn').classList.add('hidden');
+            } catch {
+                document.getElementById('tokenStatus').style.color = '#f87171';
+                document.getElementById('tokenStatus').textContent = 'SERVER OFF';
+            }
+        }
+
+        function stopAllOperations() {
+            if (currentController) {
+                currentController.abort();
+                currentController = null;
+            }
+            isHunting = false;
+            setHuntState(false);
+            showToast("🛑 Opérations arrêtées par l'utilisateur", "info");
+        }
+
+        function setHuntState(active) {
+            isHunting = active;
+            const btns = ['huntBtn', 'mapsBtn', 'annuaireBtn', 'analyzeAllBtn'];
+            btns.forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.disabled = active;
+            });
+            const stopBtn = document.getElementById('stopGlobalBtn');
+            if (active) stopBtn.classList.remove('hidden');
+            else stopBtn.classList.add('hidden');
+        }
+
+        // Auto-refresh toutes les 60s
+        setInterval(() => {
+            if (!isHunting) {
+                console.log("Auto-refreshing dashboard...");
+                loadDashboard();
+                loadLeadsFromDB(activeFilter);
+            }
+        }, 60000);
+
+        // ============================================================
+        // SCHEDULER
+        // ============================================================
+        async function loadSchedulerStatus() {
+            try {
+                const r = await fetch('http://localhost:5000/api/scheduler');
+                const data = await r.json();
+
+                const dot = document.getElementById('schedDot');
+                const nextRun = document.getElementById('schedNextRun');
+                const countries = document.getElementById('schedCountries');
+
+                if (data.running) {
+                    dot.classList.remove('off');
+                    const job = data.jobs && data.jobs[0];
+                    nextRun.textContent = job
+                        ? `Prochain lancement : ${job.next_run}`
+                        : 'Actif — heure inconnue';
+
+                    // Pré-remplir les inputs avec les valeurs courantes
+                    document.getElementById('schedHour').value   = data.hour   ?? 8;
+                    document.getElementById('schedMinute').value = data.minute ?? 0;
+                } else {
+                    dot.classList.add('off');
+                    nextRun.textContent = 'Scheduler inactif (serveur éteint ?)';
+                }
+
+                // Pays actifs
+                countries.innerHTML = (data.countries || []).map(c =>
+                    `<span class="country-chip">${c}</span>`
+                ).join('');
+            } catch (e) {
+                document.getElementById('schedNextRun').textContent = 'Serveur injoignable';
+            }
+        }
+
+        async function saveSchedulerConfig() {
+            const hour   = parseInt(document.getElementById('schedHour').value)   || 8;
+            const minute = parseInt(document.getElementById('schedMinute').value) || 0;
+            const country = document.getElementById('targetCountry').value;
+
+            try {
+                await fetch('http://localhost:5000/api/scheduler/config', {
+                    method: 'POST', headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ hour, minute, countries: [country] })
+                });
+                showToast(`✅ Scheduler reprog. à ${String(hour).padStart(2,'0')}:${String(minute).padStart(2,'0')}`, 'success');
+                await loadSchedulerStatus();
+            } catch (e) { showToast('Erreur config scheduler', 'error'); }
+        }
+
+        async function triggerSchedulerNow() {
+            const btn = document.getElementById('triggerBtn');
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-1"></i>EN COURS...';
+            try {
+                await fetch('http://localhost:5000/api/scheduler/trigger', { method: 'POST' });
+                showToast('🚀 Session de prospection lancée en arrière-plan !', 'success');
+                // Recharger les leads après un délai (les jobs tournent en async)
+                setTimeout(() => loadLeadsFromDB(), 30000);
+            } catch (e) { showToast('Erreur lancement scheduler', 'error'); }
+            finally {
+                setTimeout(() => {
+                    btn.disabled = false;
+                    btn.innerHTML = '<i class="fa-solid fa-bolt mr-1"></i>LANCER';
+                }, 5000);
+            }
+        }
+
+        function getSelectedCountries() {
+            return [...document.querySelectorAll('input[name=cc]:checked')].map(c => c.value);
+        }
+
+        function syncCountries() {
+            const selected = getSelectedCountries();
+            if (selected.length === 0) {
+                document.querySelector('input[name=cc][value=CM]').checked = true;
+            }
+            // Keep hidden select in sync for backward compat
+            document.getElementById('targetCountry').value = getSelectedCountries()[0] || 'CM';
+            saveConfig();
+        }
+
+        function saveConfig() {
+            localStorage.setItem('biound_civility', document.getElementById('userCivility').value);
+            localStorage.setItem('biound_name', document.getElementById('userName').value);
+            localStorage.setItem('biound_template', document.getElementById('messageTemplate').value);
+            localStorage.setItem('biound_countries', JSON.stringify(getSelectedCountries()));
+        }
+
+        // ============================================================
+        // TOAST
+        // ============================================================
+        let toastTimer;
+        function showToast(msg, type = "info") {
+            const t = document.getElementById('toast');
+            const icon = document.getElementById('toastIcon');
+            document.getElementById('toastMsg').textContent = msg;
+            icon.className = type === 'error' ? 'fa-solid fa-circle-xmark'
+                : type === 'success' ? 'fa-solid fa-circle-check'
+                    : 'fa-solid fa-circle-info';
+            icon.style.color = type === 'error' ? '#f87171' : type === 'success' ? '#00e5a0' : '#60a5fa';
+            t.classList.remove('hidden');
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => t.classList.add('hidden'), 4500);
+        }
+
+        // ============================================================
+        // STREAMING HELPER
+        // ============================================================
+        // Removed streamHunt helper as it's now integrated directly into hunting functions
+
+        async function startAutoHunt() {
+            const countries = getSelectedCountries();
+            if (countries.length === 0) return;
+
+            setHuntState(true);
+            currentController = new AbortController();
+
+            for (const country of countries) {
+                if (!isHunting) break;
+                showToast(`🚀 Hunting FB Ads : ${country}...`);
+                try {
+                    const response = await fetch('http://localhost:5000/auto_hunt', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ country }),
+                        signal: currentController.signal
+                    });
+                    const reader = response.body.getReader();
+                    const decoder = new TextDecoder();
+                    while (true) {
+                        const { value, done } = await reader.read();
+                        if (done) break;
+                        for (const line of decoder.decode(value).split('\n')) {
+                            if (!line.trim()) continue;
+                            try {
+                                const data = JSON.parse(line);
+                                if (data.status === 'lead') await ingestLead(data);
+                                if (data.status === 'progress') showToast(data.message, 'info');
+                                if (data.status === 'error') showToast('❌ ' + data.message, 'error');
+                                if (data.status === 'done') showToast(`✅ Terminé — ${data.total || leadsData.length} résultats`, 'success');
+                            } catch (e) { }
+                        }
+                    }
+                } catch (e) {
+                    if (e.name === 'AbortError') {
+                        showToast("FB Ads Hunt annulé.", "info");
+                    } else {
+                        showToast("Serveur injoignable. Lance serveur.py d'abord.", 'error');
+                    }
+                }
+            }
+            setHuntState(false);
+            loadDashboard();
+        }
+
+        async function startMapsHunt() {
+            const countries = getSelectedCountries();
+            if (countries.length === 0) return;
+
+            setHuntState(true);
+            currentController = new AbortController();
+
+            for (const country of countries) {
+                if (!isHunting) break;
+                showToast(`🗺️ Hunting OSM : ${country}...`);
+                try {
+                    const response = await fetch('http://localhost:5000/maps_hunt', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ country }),
+                        signal: currentController.signal
+                    });
+                    const reader = response.body.getReader();
+                    const decoder = new TextDecoder();
+                    while (true) {
+                        const { value, done } = await reader.read();
+                        if (done) break;
+                        for (const line of decoder.decode(value).split('\n')) {
+                            if (!line.trim()) continue;
+                            try {
+                                const data = JSON.parse(line);
+                                if (data.status === 'lead') await ingestLead(data);
+                                if (data.status === 'progress') showToast(data.message, 'info');
+                                if (data.status === 'error') showToast('❌ ' + data.message, 'error');
+                                if (data.status === 'done') showToast(`✅ Terminé — ${data.total || leadsData.length} résultats`, 'success');
+                            } catch (e) { }
+                        }
+                    }
+                } catch (e) {
+                    if (e.name === 'AbortError') {
+                        showToast("OSM Hunt annulé.", "info");
+                    } else {
+                        showToast("Serveur injoignable. Lance serveur.py d'abord.", 'error');
+                    }
+                }
+            }
+            setHuntState(false);
+            loadDashboard();
+        }
+
+        async function startAnnuaireHunt() {
+            const countries = getSelectedCountries();
+            if (countries.length === 0) return;
+
+            setHuntState(true);
+            currentController = new AbortController();
+
+            for (const country of countries) {
+                if (!isHunting) break;
+                showToast(`📒 Scraping Annuaire : ${country}...`);
+                try {
+                    const response = await fetch('http://localhost:5000/annuaire_hunt', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ country }),
+                        signal: currentController.signal
+                    });
+                    const reader = response.body.getReader();
+                    const decoder = new TextDecoder();
+                    while (true) {
+                        const { value, done } = await reader.read();
+                        if (done) break;
+                        for (const line of decoder.decode(value).split('\n')) {
+                            if (!line.trim()) continue;
+                            try {
+                                const data = JSON.parse(line);
+                                if (data.status === 'lead') await ingestLead(data);
+                                if (data.status === 'progress') showToast(data.message, 'info');
+                                if (data.status === 'error') showToast('❌ ' + data.message, 'error');
+                                if (data.status === 'done') showToast(`✅ Terminé — ${data.total || leadsData.length} résultats`, 'success');
+                            } catch (e) { }
+                        }
+                    }
+                } catch (e) {
+                    if (e.name === 'AbortError') {
+                        showToast("Annuaire Hunt annulé.", "info");
+                    } else {
+                        showToast("Serveur injoignable. Lance serveur.py d'abord.", 'error');
+                    }
+                }
+            }
+            setHuntState(false);
+            loadDashboard();
+        }
+
+        // ============================================================
+        // EMAIL CRAWLER — streaming groupé
+        // ============================================================
+        async function startEmailCrawl() {
+            const country = document.getElementById('targetCountry').value;
+            const btn = document.getElementById('crawlBtn');
+            const bar = document.getElementById('crawlerBar');
+            const prog = document.getElementById('crawlerProgress');
+            const cnt = document.getElementById('crawlerCount');
+
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-1"></i> CRAWL EN COURS...';
+            bar.classList.remove('hidden');
+
+            let done = 0, total = 0;
+
+            try {
+                const response = await fetch('http://localhost:5000/crawl_emails_batch', {
+                    method: 'POST', headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ country })
+                });
+                const reader = response.body.getReader();
+                const decoder = new TextDecoder();
+
+                while (true) {
+                    const { value, done: streamDone } = await reader.read();
+                    if (streamDone) break;
+                    for (const line of decoder.decode(value).split('\n')) {
+                        if (!line.trim()) continue;
+                        try {
+                            const data = JSON.parse(line);
+                            if (data.status === 'result') {
+                                done++;
+                                cnt.textContent = `${done} / ${total || '?'}`;
+                                if (total) prog.style.width = `${(done / total) * 100}%`;
+
+                                if (data.found && data.emails.length > 0) {
+                                    // Mettre à jour la card du lead avec les emails trouvés
+                                    updateLeadEmailUI(data.number, data.emails);
+                                    updateStats();
+                                }
+                            }
+                            if (data.status === 'done') {
+                                total = data.total;
+                                prog.style.width = '100%';
+                                showToast(`📧 Crawl terminé — emails trouvés : ${data.found}/${data.total}`, 'success');
+                            }
+                            if (data.status === 'error') showToast('❌ ' + data.message, 'error');
+                        } catch (e) { }
+                    }
+                }
+            } catch (e) { showToast("Erreur crawl. Serveur lancé ?", 'error'); }
+            finally {
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fa-solid fa-envelope-open-text mr-1"></i> EMAIL CRAWLER';
+                setTimeout(() => bar.classList.add('hidden'), 3000);
+            }
+        }
+
+        // Crawl individuel depuis la card
+        async function crawlSingleEmail(number, website) {
+            const btn = document.getElementById(`crawlemailbtn-${number.replace('+', '')}`);
+            if (btn) { btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>'; }
+
+            try {
+                const r = await fetch('http://localhost:5000/crawl_email', {
+                    method: 'POST', headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ number, website })
+                });
+                const data = await r.json();
+                if (data.found) {
+                    updateLeadEmailUI(number, data.emails);
+                    updateStats();
+                    showToast(`📧 ${data.emails.join(', ')}`, 'success');
+                } else {
+                    showToast('Aucun email trouvé sur ce site.', 'info');
+                    if (btn) { btn.disabled = false; btn.innerHTML = '<i class="fa-solid fa-envelope"></i>'; }
+                }
+            } catch (e) {
+                showToast('Erreur crawl', 'error');
+                if (btn) { btn.disabled = false; btn.innerHTML = '<i class="fa-solid fa-envelope"></i>'; }
+            }
+        }
+
+        function updateLeadEmailUI(number, emails) {
+            const safeId = number.replace('+', '');
+            const emailBox = document.getElementById(`emailbox-${safeId}`);
+            const lead = leadsData.find(l => l.number === number);
+
+            if (lead) lead.email = emails.join(',');
+
+            if (emailBox) {
+                emailBox.innerHTML = emails.map(e =>
+                    `<span class="email-tag">${e}</span>`
+                ).join(' ');
+                emailBox.classList.remove('hidden');
+            }
+
+            const crawlBtn = document.getElementById(`crawlemailbtn-${safeId}`);
+            if (crawlBtn) {
+                crawlBtn.disabled = true;
+                crawlBtn.innerHTML = '<i class="fa-solid fa-check"></i>';
+            }
+        }
+
+        // ============================================================
+        // INGESTION D'UN LEAD
+        // ============================================================
+        async function ingestLead(data) {
+            const countries = getSelectedCountries();
+            if (countries.length === 0) return;
+
+            // BUG FIX #1 : source 'osm' (plus 'google_maps')
+            if ((data.source === 'osm') && data.phone) {
+                const clean = data.phone.replace(/\D/g, '');
+                if (clean.length >= 8) {
+                    // Trouver le bon pays pour ce numéro (on suppose que le premier qui matche ou le pays de la requete OSM est bon)
+                    let matchedCountry = countries[0];
+                    let finalNumber = clean;
+                    for (const c of countries) {
+                        const cfg = COUNTRY_CONFIG[c];
+                        if (clean.startsWith(cfg.code) || clean.length === cfg.length) {
+                            matchedCountry = c;
+                            finalNumber = '+' + (clean.startsWith(cfg.code) ? clean : cfg.code + clean);
+                            break;
+                        }
+                    }
+                    if (!finalNumber.startsWith('+')) finalNumber = '+' + finalNumber;
+
+                    await _saveLead({
+                        number: finalNumber, source: 'osm', country: matchedCountry,
+                        name: data.name || '', website: data.website || '',
+                        city: data.city || '', category: data.category || 'autre',
+                        product: data.name || 'Business local',
+                        context: data.text || '', address: data.address || ''
+                    });
+                }
+                return;
+            }
+
+            // FB Ads ou manuel : extraction regex pour TOUS les pays sélectionnés
+            const regex = /(?:\+?\d{1,3}[\s\-\.]?)?(?:\d[\s\-\.]?){8,12}\d|https?:\/\/(?:wa\.me\/|api\.whatsapp\.com\/send\?phone=)\d{6,15}/g;
+            const matches = [...(data.text || '').matchAll(regex)];
+            
+            for (const m of matches) {
+                let rawDigits = m[0].replace(/\D/g, '');
+                if (rawDigits.startsWith('00')) rawDigits = rawDigits.substring(2);
+
+                for (const c of countries) {
+                    const cfg = COUNTRY_CONFIG[c];
+                    let norm = rawDigits.startsWith(cfg.code) ? rawDigits : (rawDigits.length === cfg.length ? cfg.code + rawDigits : null);
+                    if (norm && cfg.regex.test(norm.substring(cfg.code.length))) {
+                        await _saveLead({
+                            number: '+' + norm, source: data.source || 'manual', country: c,
+                            name: '', website: '', city: '', category: 'autre',
+                            product: 'En attente...', context: (data.text || '').substring(0, 500)
+                        });
+                        break; // Stop if it matched a country
+                    }
+                }
+            }
+        }
+
+        async function _saveLead(lead) {
+            if (leadsData.some(l => l.number === lead.number)) return;
+            try {
+                const r = await fetch('http://localhost:5000/api/leads', {
+                    method: 'POST', headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(lead)
+                });
+                const res = await r.json();
+                if (res.status === 'added') {
+                    leadsData.unshift(res.lead);
+                    renderLeadCard(res.lead, 0);
+                    updateStats();
+                    updateCategoryFilter(res.lead.category || 'autre');
+                }
+                // 'exists' → doublon DB silencieusement ignoré
+            } catch (e) { console.warn('Erreur save lead:', e); }
+        }
+
+        // ============================================================
+        // RENDU CARD
+        // ============================================================
+        function renderLeadCard(l, _idx, append = false) {
+            const safeId = l.number.replace('+', '');
+            // BUG FIX #2 : badge OSM
+            const sourceClass = { meta_api: 'src-meta', osm: 'src-osm', manual: 'src-manual' }[l.source] || 'src-manual';
+            const sourceLabel = { meta_api: 'META', osm: 'OSM', manual: 'MANUEL' }[l.source] || 'MANUEL';
+            const catClass = CATEGORY_COLORS[l.category] || 'cat-autre';
+            const scoreDisp = l.ai_score ? `${l.ai_score}/10` : '—/10';
+            const analyzedCls = l.analyzed ? 'analyzed' : '';
+
+            const insightHTML = l.analyzed
+                ? `<strong style="color:#00e5a0">BESOIN :</strong> ${l.besoin || ''}<br>
+           <strong style="color:#60a5fa">SERVICE :</strong> ${SERVICE_LABELS[l.service_needed] || '💼 Service'}<br>
+           <strong style="color:#fbbf24">ACCROCHE :</strong> ${l.ai_accroche || l.product || ''}<br>
+           <strong style="color:#f472b6">MATURITÉ DIGITALE :</strong> ${l.digital_score ? l.digital_score + '/10' : '—'} ${l.digital_score && l.digital_score <= 3 ? '🔥 Grosse opportunité !' : l.digital_score && l.digital_score <= 6 ? '⚡ Peut progresser' : ''}`
+                : '';
+
+            const emailHTML = l.email
+                ? l.email.split(',').filter(Boolean).map(e => `<span class="email-tag">${e}</span>`).join(' ')
+                : '';
+
+            const div = document.createElement('div');
+            div.id = `card-${safeId}`;
+            div.className = `lead-card ${analyzedCls}`;
+            div.dataset.category = l.category || 'autre';
+            div.innerHTML = `
+        <div class="flex justify-between items-start mb-2 gap-2 flex-wrap">
+            <div class="flex items-center gap-2 flex-wrap">
+                <span class="mono font-bold text-sm" style="color:var(--accent);">${l.number}</span>
+                ${l.name ? `<span class="text-xs" style="color:#8b949e;">${l.name}</span>` : ''}
+            </div>
+            <div class="flex items-center gap-1 flex-wrap">
+                <select id="status-${safeId}" onchange="changeStatus('${l.number}', this.value)"
+                    class="badge-cat outline-none" style="background:#161b22;color:#e6edf3;border:1px solid #30363d;padding:2px 4px;cursor:pointer;">
+                    <option value="Nouveau"  ${l.status === 'Nouveau' ? 'selected' : ''}>🆕 Nouveau</option>
+                    <option value="Contacté" ${l.status === 'Contacté' ? 'selected' : ''}>📤 Contacté</option>
+                    <option value="Répondu"  ${l.status === 'Répondu' ? 'selected' : ''}>💬 Répondu</option>
+                    <option value="Converti" ${l.status === 'Converti' ? 'selected' : ''}>✅ Converti</option>
+                </select>
+                <span class="badge-cat ${sourceClass}">${sourceLabel}</span>
+                <span class="badge-cat ${catClass}" id="catbadge-${safeId}">${l.category || 'autre'}</span>
+                <span class="badge-cat" id="scorebadge-${safeId}"
+                    style="background:${l.ai_score >= 7 ? '#0522181a' : l.ai_score >= 4 ? '#422b0722' : l.ai_score ? '#2d0a0a22' : '#21262d'};
+                           color:${l.ai_score >= 7 ? '#34d399' : l.ai_score >= 4 ? '#fbbf24' : l.ai_score ? '#f87171' : '#8b949e'};
+                           border:1px solid #30363d;">${scoreDisp}</span>
+            </div>
+        </div>
+
+        ${l.website ? `<div class="mb-2 flex items-center gap-2">
+            <a href="${l.website}" target="_blank" class="mono text-xs" style="color:var(--accent2);">${l.website}</a>
+        </div>` : ''}
+
+        <!-- Email tags -->
+        <div id="emailbox-${safeId}" class="${emailHTML ? '' : 'hidden'} flex flex-wrap gap-1 mb-2">${emailHTML}</div>
+
+        <div id="insight-${safeId}" class="${l.analyzed ? '' : 'hidden'} mb-3 p-3 rounded-lg text-xs mono"
+            style="background:#0d1117;border:1px solid #1a3a2a;color:#86efac;line-height:1.6;">${insightHTML}</div>
+
+        <div id="scorebar-${safeId}" class="${l.analyzed ? '' : 'hidden'} mb-2">
+            <div class="score-bar"><div class="score-fill" id="scorefill-${safeId}" style="width:${l.ai_score ? l.ai_score * 10 : 0}%;"></div></div>
+        </div>
+
+        <div class="flex gap-2 mt-2 flex-wrap">
+            <button onclick="aiAnalyze('${l.number}')" id="analyzebtn-${safeId}"
+                class="btn-ghost flex-1 text-xs" ${l.analyzed ? 'disabled' : ''}>
+                ${l.analyzed ? '<i class="fa-solid fa-check mr-1"></i> ANALYSÉ' : '<i class="fa-solid fa-brain mr-1"></i> ANALYSER'}
+            </button>
+            ${l.website ? `<button onclick="crawlSingleEmail('${l.number}','${l.website}')" id="crawlemailbtn-${safeId}"
+                class="btn-ghost text-xs px-3" style="color:#60a5fa;border-color:#1877f244;"
+                ${l.email ? 'disabled' : ''} title="Extraire email">
+                <i class="fa-solid fa-${l.email ? 'check' : 'envelope'}"></i>
+            </button>` : ''}
+            <button onclick="openWhatsApp('${l.number}')" class="btn-ghost text-xs px-3" style="color:#25d366;border-color:#25d36633;">
+                <i class="fa-brands fa-whatsapp"></i>
+            </button>
+            <button onclick="toggleInteractions('${l.number}')" class="btn-ghost text-xs px-3" style="color:#a5b4fc;border-color:#6366f133;" title="Historique/Notes">
+                <i class="fa-solid fa-clock-rotate-left"></i>
+            </button>
+            <button onclick="del('${l.number}')" class="btn-ghost text-xs px-3" style="color:#f87171;border-color:#f8717133;">
+                <i class="fa-solid fa-trash"></i>
+            </button>
+        </div>
+        
+        <!-- CRM Interaction Timeline -->
+        <div id="crm-${safeId}" class="hidden mt-3 p-3 rounded-lg border border-dashed border-gray-700 bg-gray-900/50">
+            <h4 class="mono text-[10px] uppercase mb-2 text-gray-500">Historique des interactions</h4>
+            <div id="timeline-${safeId}" class="space-y-2 mb-3 max-h-40 overflow-y-auto pr-2 custom-scrollbar"></div>
+            <div class="flex gap-2">
+                <input type="text" id="note-${safeId}" placeholder="Ajouter une note..." 
+                    class="flex-1 bg-black border border-gray-800 rounded px-2 py-1 text-xs mono outline-none focus:border-indigo-500">
+                <button onclick="addNote('${l.number}')" class="bg-indigo-600 hover:bg-indigo-500 text-white text-[10px] px-2 py-1 rounded mono">OK</button>
+            </div>
+        </div>
+        `;
+
+            if (append) document.getElementById('leadsList').appendChild(div);
+            else document.getElementById('leadsList').prepend(div);
+        }
+
+        // ============================================================
+        // CRM — INTERACTIONS
+        // ============================================================
+        async function toggleInteractions(number) {
+            const safeId = number.replace('+', '');
+            const panel = document.getElementById(`crm-${safeId}`);
+            panel.classList.toggle('hidden');
+            if (!panel.classList.contains('hidden')) {
+                loadInteractions(number);
+            }
+        }
+
+        async function loadInteractions(number) {
+            const safeId = number.replace('+', '');
+            const timeline = document.getElementById(`timeline-${safeId}`);
+            timeline.innerHTML = '<div class="text-[10px] text-gray-600 mono">Chargement...</div>';
+            try {
+                const r = await fetch(`http://localhost:5000/api/interactions/${encodeURIComponent(number)}`);
+                const data = await r.json();
+                if (data.length === 0) {
+                    timeline.innerHTML = '<div class="text-[10px] text-gray-600 mono">Aucune interaction</div>';
+                    return;
+                }
+                timeline.innerHTML = data.map(it => `
+                    <div class="border-l-2 border-indigo-900 pl-2 pb-1">
+                        <div class="flex justify-between items-center text-[9px] text-gray-500 mono">
+                            <span class="font-bold text-indigo-400 capitalize">${it.type}</span>
+                            <span>${new Date(it.created_at).toLocaleString('fr-FR', {dateStyle:'short', timeStyle:'short'})}</span>
+                        </div>
+                        <div class="text-[10px] text-gray-300">${it.note || ''}</div>
+                    </div>
+                `).join('');
+            } catch (e) { timeline.innerHTML = '<div class="text-[10px] text-red-900 mono">Erreur</div>'; }
+        }
+
+        async function addNote(number) {
+            const safeId = number.replace('+', '');
+            const input = document.getElementById(`note-${safeId}`);
+            const note = input.value.trim();
+            if (!note) return;
+            try {
+                await fetch('http://localhost:5000/api/interactions', {
+                    method: 'POST', headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ number, type: 'Note', note })
+                });
+                input.value = '';
+                loadInteractions(number);
+            } catch (e) { showToast('Erreur ajout note', 'error'); }
+        }
+
+        // ============================================================
+        // ANALYSE IA
+        // ============================================================
+        async function aiAnalyze(number) {
+            const lead = leadsData.find(l => l.number === number);
+            if (!lead) return;
+            const safeId = number.replace('+', '');
+            const btn = document.getElementById(`analyzebtn-${safeId}`);
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-1"></i> ANALYSE...';
+
+            try {
+                const r = await fetch('http://localhost:5000/analyze_lead', {
+                    method: 'POST', headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ context: lead.context, number: lead.number })
+                });
+                const data = await r.json();
+
+                lead.ai_score = data.score;
+                lead.digital_score = data.digital_score;
+                lead.category = data.business_category || lead.category;
+                lead.service_needed = data.service_needed;
+                lead.besoin = data.besoin;
+                lead.ai_accroche = data.accroche;
+                lead.product = data.accroche;
+                lead.analyzed = true;
+
+                const cat = data.business_category || 'autre';
+                document.getElementById(`catbadge-${safeId}`).textContent = cat;
+                document.getElementById(`catbadge-${safeId}`).className = `badge-cat ${CATEGORY_COLORS[cat] || 'cat-autre'}`;
+                document.getElementById(`scorebadge-${safeId}`).textContent = `${data.score}/10`;
+                document.getElementById(`scorebadge-${safeId}`).style.color = data.score >= 7 ? '#34d399' : data.score >= 4 ? '#fbbf24' : '#f87171';
+
+                const scorebar = document.getElementById(`scorebar-${safeId}`);
+                const scorefill = document.getElementById(`scorefill-${safeId}`);
+                scorebar.classList.remove('hidden');
+                setTimeout(() => { scorefill.style.width = `${data.score * 10}%`; }, 100);
+
+                const ds = data.digital_score || 0;
+                const dsLabel = ds <= 3 ? '🔥 Grosse opportunité !' : ds <= 6 ? '⚡ Peut progresser' : '';
+                const insight = document.getElementById(`insight-${safeId}`);
+                insight.innerHTML = `<strong style="color:#00e5a0">BESOIN :</strong> ${data.besoin}<br>
+            <strong style="color:#60a5fa">SERVICE :</strong> ${SERVICE_LABELS[data.service_needed] || '💼 Service'}<br>
+            <strong style="color:#fbbf24">ACCROCHE :</strong> ${data.accroche}<br>
+            <strong style="color:#f472b6">MATURITÉ DIGITALE :</strong> ${ds}/10 ${dsLabel}`;
+                insight.classList.remove('hidden');
+
+                document.getElementById(`card-${safeId}`).classList.add('analyzed');
+                document.getElementById(`card-${safeId}`).dataset.category = cat;
+                updateCategoryFilter(cat);
+                updateStats();
+                btn.innerHTML = '<i class="fa-solid fa-check mr-1"></i> ANALYSÉ';
+
+            } catch (e) {
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fa-solid fa-brain mr-1"></i> RÉESSAYER';
+                showToast('Erreur analyse — Gemini accessible ?', 'error');
+            }
+        }
+
+        async function analyzeAllPending() {
+            const btn = document.getElementById('analyzeAllBtn');
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-1"></i> ANALYSE EN COURS...';
+            for (const lead of leadsData) {
+                if (!lead.analyzed) {
+                    await aiAnalyze(lead.number);
+                    await new Promise(r => setTimeout(r, 600));
+                }
+            }
+            btn.disabled = false;
+            btn.innerHTML = '<i class="fa-solid fa-microchip mr-1"></i> ANALYSER TOUT';
+            showToast('Analyse groupée terminée !', 'success');
+        }
+
+        // ============================================================
+        // STATS & FILTRES
+        // ============================================================
+        function updateStats() {
+            document.getElementById('countBadge').textContent = leadsData.length;
+            document.getElementById('analyzedBadge').textContent = leadsData.filter(l => l.analyzed).length;
+            document.getElementById('emailBadge').textContent = leadsData.filter(l => l.email).length;
+        }
+
+        function updateCategoryFilter(cat) {
+            const container = document.getElementById('categoryFilters');
+            if (!cat || container.querySelector(`[data-cat="${cat}"]`)) return;
+            const btn = document.createElement('button');
+            btn.className = 'filter-btn btn-ghost';
+            btn.dataset.cat = cat;
+            btn.textContent = cat.toUpperCase();
+            btn.onclick = () => filterBy(cat);
+            container.appendChild(btn);
+        }
+
+        function filterBy(cat) {
+            loadLeadsFromDB(cat);
+        }
+
+        // ============================================================
+        // ACTIONS
+        // ============================================================
+        async function processText() {
+            const text = document.getElementById('rawInput').value.trim();
+            if (!text) return;
+            await ingestLead({ text, source: 'manual' });
+            document.getElementById('resultsArea').classList.remove('hidden');
+            document.getElementById('emptyState').classList.add('hidden');
+            showToast('Leads extraits du texte manuel.', 'success');
+        }
+
+        function clearInput() { document.getElementById('rawInput').value = ''; }
+
+        async function changeStatus(number, newStatus) {
+            const lead = leadsData.find(l => l.number === number);
+            if (lead) lead.status = newStatus;
+            try {
+                await fetch('http://localhost:5000/api/leads/update', {
+                    method: 'POST', headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ number, status: newStatus })
+                });
+                showToast(`Statut → ${newStatus}`, 'success');
+            } catch (e) { showToast('Erreur DB', 'error'); }
+        }
+
+        async function del(number) {
+            try {
+                await fetch('http://localhost:5000/api/leads/delete', {
+                    method: 'POST', headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ number })
+                });
+                const idx = leadsData.findIndex(l => l.number === number);
+                if (idx !== -1) leadsData.splice(idx, 1);
+                const card = document.getElementById(`card-${number.replace('+', '')}`);
+                if (card) card.remove();
+                updateStats();
+                if (leadsData.length === 0) document.getElementById('emptyState').classList.remove('hidden');
+            } catch (e) { showToast('Erreur suppression', 'error'); }
+        }
+
+        async function openWhatsApp(number) {
+            const lead = leadsData.find(l => l.number === number);
+            if (!lead) return;
+            await changeStatus(number, 'Contacté');
+            const select = document.getElementById(`status-${number.replace('+', '')}`);
+            if (select) select.value = 'Contacté';
+            const civ = document.getElementById('userCivility').value;
+            const nom = document.getElementById('userName').value;
+            const tmpl = document.getElementById('messageTemplate').value;
+            const msg = tmpl
+                .replace('[BOUTIQUE]', lead.name || 'votre boutique')
+                .replace('[PRODUIT]', lead.ai_accroche || lead.product || '')
+                .replace('[CIVILITE]', civ)
+                .replace('[NOM]', nom);
+            window.open(`https://wa.me/${number.replace('+', '')}/?text=${encodeURIComponent(msg)}`, '_blank');
+        }
+
+        async function sendAuto() {
+            if (!leadsData.length) return;
+            const civ = document.getElementById('userCivility').value;
+            const nom = document.getElementById('userName').value;
+            const tmpl = document.getElementById('messageTemplate').value;
+            const payload = {
+                leads: leadsData.map(l => {
+                    const msg = tmpl
+                        .replace('[BOUTIQUE]', l.name || 'votre boutique')
+                        .replace('[PRODUIT]', l.ai_accroche || l.product || '')
+                        .replace('[CIVILITE]', civ).replace('[NOM]', nom);
+                    return { number: l.number, wa_link: `https://wa.me/${l.number.replace('+', '')}/?text=${encodeURIComponent(msg)}` };
+                })
+            };
+            showToast('🤖 Robot activé. Ne touchez plus à rien !', 'success');
+            try {
+                const r = await fetch('http://localhost:5000/send_whatsapp', {
+                    method: 'POST', headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                const res = await r.json();
+                leadsData.forEach(l => {
+                    l.status = 'Contacté';
+                    const sel = document.getElementById(`status-${l.number.replace('+', '')}`);
+                    if (sel) sel.value = 'Contacté';
+                });
+                showToast(res.message || 'Envoi terminé !', 'success');
+            } catch (e) { showToast('Erreur envoi WhatsApp', 'error'); }
+        }
+
+        function exportCSV() {
+            if (!leadsData.length) return;
+            const headers = ['Numéro', 'Nom', 'Source', 'Catégorie', 'Service', 'Score', 'Accroche', 'Email', 'Site', 'Ville', 'Statut'];
+            const rows = leadsData.map(l => [
+                l.number, l.name || '', l.source || '', l.category || '',
+                l.service_needed || '', l.ai_score || '', l.ai_accroche || l.product || '',
+                l.email || '', l.website || '', l.city || '', l.status || ''
+            ]);
+            const csv = [headers, ...rows].map(r => r.map(v => `"${v}"`).join(',')).join('\n');
+            const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' });
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = `biound_leads_${new Date().toISOString().slice(0, 10)}.csv`;
+            a.click();
+            showToast('Export CSV téléchargé !', 'success');
+        }
+    </script>
+</body>
+
+</html>

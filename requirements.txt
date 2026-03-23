@@ -1,0 +1,10 @@
+Flask==3.0.0
+flask-cors==4.0.0
+python-dotenv==1.0.0
+requests==2.31.0
+colorama==0.4.6
+pyautogui==0.9.54
+beautifulsoup4==4.12.2
+apscheduler==3.10.4
+# Note: pyautogui et webbrowser ne fonctionneront pas sur un serveur sans GUI (VPS classique).
+# Pour un SaaS, on utilisera des liens WhatsApp directs.

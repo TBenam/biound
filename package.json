@@ -1,0 +1,19 @@
+{
+  "name": "biound-pro",
+  "version": "4.5.0",
+  "description": "Sawa Tech Edition - Lead Hunting & Analysis Tool",
+  "main": "serveur.py",
+  "scripts": {
+    "start": ".\\\\.venv\\\\Scripts\\\\python.exe serveur.py",
+    "dev": ".\\\\.venv\\\\Scripts\\\\python.exe serveur.py",
+    "info": "echo This is a Python/Flask project handled via npm scripts for convenience."
+  },
+  "keywords": [
+    "lead-hunting",
+    "facebook-ads",
+    "flask",
+    "automation"
+  ],
+  "author": "Sawa Tech",
+  "license": "ISC"
+}

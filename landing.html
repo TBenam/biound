@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biound Pro - Sawa Tech | Automatisation B2B</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;700;800&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --accent: #00e5a0;
+            --accent2: #3b82f6;
+            --dark: #0d1117;
+            --panel: #161b22;
+            --border: #30363d;
+        }
+
+        body {
+            font-family: 'Syne', sans-serif;
+            background: var(--dark);
+            color: #e6edf3;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .mono {
+            font-family: 'Space Mono', monospace;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 229, 160, .015) 2px, rgba(0, 229, 160, .015) 4px);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        /* Glassmorphism Elements */
+        .glass-panel {
+            background: rgba(22, 27, 34, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(48, 54, 61, 0.8);
+            border-radius: 16px;
+        }
+
+        /* Animated Gradient Background */
+        .hero-glow {
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(0, 229, 160, 0.15) 0%, rgba(59, 130, 246, 0.1) 40%, rgba(13, 17, 23, 0) 70%);
+            top: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: -1;
+            animation: pulse-glow 8s infinite alternate;
+        }
+
+        @keyframes pulse-glow {
+            0% {
+                opacity: 0.5;
+                transform: translateX(-50%) scale(0.9);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateX(-50%) scale(1.1);
+            }
+        }
+
+        .btn-glow {
+            box-shadow: 0 0 20px rgba(0, 229, 160, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .btn-glow:hover {
+            box-shadow: 0 0 30px rgba(0, 229, 160, 0.6);
+            transform: translateY(-2px);
+        }
+
+        .feature-card {
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-5px);
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 glass-panel border-b-0 rounded-none border-x-0 border-t-0 px-6 py-4">
+        <div class="max-w-6xl mx-auto flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <div class="w-2 h-2 rounded-full hidden sm:block"
+                    style="background:var(--accent); box-shadow: 0 0 8px var(--accent);"></div>
+                <span class="font-bold text-xl tracking-widest text-[#00e5a0]">BIOUND <span
+                        class="text-white">PRO</span></span>
+            </div>
+            <div class="hidden md:flex gap-8 text-sm font-bold text-[#8b949e]">
+                <a href="#features" class="hover:text-white transition">Fonctionnalités</a>
+                <a href="#pricing" class="hover:text-white transition">Tarifs</a>
+            </div>
+            <div>
+                <a href="/app"
+                    class="mono text-xs font-bold bg-[#00e5a0] text-[#0d1117] px-5 py-2.5 rounded-lg btn-glow inline-block">
+                    ESPACE CLIENT
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative pt-40 pb-20 px-4 text-center">
+        <div class="hero-glow"></div>
+        <div class="max-w-4xl mx-auto">
+            <div
+                class="inline-block px-4 py-1.5 rounded-full border border-[#30363d] bg-[#161b22] mb-6 shadow-lg shadow-[#00e5a011]">
+                <span class="mono text-xs text-[#00e5a0]">✨ Trouvez vos clients parfaits</span>
+            </div>
+            <h1 class="text-5xl md:text-7xl font-bold mb-6 leading-tight">
+                Trouvez des Leads. <br>
+                <span
+                    class="text-transparent bg-clip-text bg-gradient-to-r from-[#00e5a0] to-[#3b82f6]">Convertissez-les
+                    en Auto.</span>
+            </h1>
+            <p class="text-lg md:text-xl text-[#8b949e] mb-10 max-w-2xl mx-auto">
+                La plateforme de prospection B2B ultime pour l'écosystème francophone. Meta Ads, OpenStreetMap, Scrapeur
+                d'emails et IA... tout en un.
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="/app"
+                    class="bg-[#00e5a0] text-[#0d1117] font-bold text-lg px-8 py-4 rounded-xl btn-glow flex items-center justify-center gap-3 hover:bg-[#00ffb2] transition">
+                    <i class="fa-solid fa-rocket"></i> Essayer la Démo
+                </a>
+                <a href="#features"
+                    class="glass-panel text-white font-bold text-lg px-8 py-4 rounded-xl hover:bg-[#30363d] hover:border-[#444c56] transition flex items-center justify-center">
+                    Voir les Fonctionnalités
+                </a>
+            </div>
+            <div class="mt-14 opacity-60">
+                <p class="mono text-xs mb-4">TECHNOLOGIES EMBARQUÉES</p>
+                <div class="flex justify-center gap-8 text-2xl grayscale">
+                    <i class="fa-brands fa-meta" title="Meta Ads"></i>
+                    <i class="fa-solid fa-map" title="OpenStreetMap"></i>
+                    <i class="fa-solid fa-brain" title="Gemini 2.0"></i>
+                    <i class="fa-brands fa-whatsapp" title="WhatsApp Bot"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- App Preview / Mockup -->
+    <section class="px-4 pb-24 relative z-10">
+        <div class="max-w-5xl mx-auto glass-panel p-2 shadow-2xl relative">
+            <div class="absolute inset-0 bg-gradient-to-t from-[#0d1117] via-transparent to-transparent z-10 pointer-events-none rounded-[16px]"
+                style="top: 50%;"></div>
+            <div class="rounded-xl overflow-hidden border border-[#30363d] bg-[#161b22] h-[500px] relative">
+                <!-- Fake App UI Header -->
+                <div class="h-12 border-b border-[#30363d] flex items-center px-4 gap-2 bg-[#0d1117]">
+                    <div class="w-3 h-3 rounded-full bg-[#ff5f56]"></div>
+                    <div class="w-3 h-3 rounded-full bg-[#ffbd2e]"></div>
+                    <div class="w-3 h-3 rounded-full bg-[#27c93f]"></div>
+                    <div class="mx-auto mono text-xs text-[#8b949e] flex items-center gap-2">
+                        <i class="fa-solid fa-lock text-[#00e5a0]"></i> app.biound.pro
+                    </div>
+                </div>
+                <!-- Fake App Content -->
+                <div class="p-6 grid grid-cols-1 md:grid-cols-3 gap-6 opacity-80">
+                    <div class="col-span-2 space-y-4">
+                        <div class="flex gap-4 mb-6">
+                            <div class="h-10 w-32 bg-[#00e5a0] rounded-lg"></div>
+                            <div class="h-10 w-32 bg-[#3b82f6] rounded-lg"></div>
+                        </div>
+                        <div
+                            class="h-32 bg-[#0d1117] border border-[#30363d] rounded-lg p-5 flex flex-col justify-between">
+                            <div class="flex justify-between">
+                                <div class="h-4 w-1/3 bg-[#30363d] rounded"></div>
+                                <div class="h-4 w-16 bg-[#00e5a044] rounded"></div>
+                            </div>
+                            <div class="h-2 w-full bg-gradient-to-r from-[#00e5a0] to-transparent rounded"></div>
+                        </div>
+                        <div class="h-24 bg-[#0d1117] border border-[#30363d] rounded-lg p-5">
+                            <div class="h-4 w-1/4 bg-[#30363d] rounded mb-3"></div>
+                            <div class="h-2 w-3/4 bg-[#30363d] rounded mb-2"></div>
+                            <div class="h-2 w-1/2 bg-[#30363d] rounded"></div>
+                        </div>
+                    </div>
+                    <div class="col-span-1 space-y-4 hidden md:block">
+                        <div
+                            class="h-48 bg-[#0d1117] border border-[#30363d] rounded-lg flex items-center justify-center flex-col gap-4 relative overflow-hidden">
+                            <div class="absolute inset-0 bg-[#00e5a0] opacity-5 blur-xl rounded-full"></div>
+                            <div
+                                class="w-16 h-16 rounded-full border-4 border-[#30363d] border-t-[#00e5a0] animate-spin">
+                            </div>
+                            <span class="mono text-xs text-[#00e5a0]">RECHERCHE EN COURS...</span>
+                        </div>
+                        <div class="h-40 bg-[#161b22] border border-[#7c3aed44] rounded-lg p-4">
+                            <div class="flex items-center gap-2 mb-4">
+                                <i class="fa-solid fa-sparkles text-[#a78bfa]"></i>
+                                <span class="mono text-xs text-[#a78bfa]">IA ANALYTICS</span>
+                            </div>
+                            <div class="space-y-3">
+                                <div class="h-2 w-full bg-[#30363d] rounded"></div>
+                                <div class="h-2 w-5/6 bg-[#30363d] rounded"></div>
+                                <div class="h-2 w-4/6 bg-[#30363d] rounded"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-24 px-4 bg-[#0d1117]">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold mb-4">La machine parfaite pour les agences.</h2>
+                <p class="text-[#8b949e] max-w-2xl mx-auto text-lg">Oubliez le scraping manuel. Biound Pro agrège,
+                    filtre et analyse pour vous les meilleures opportunités avec une précision redoutable.</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="glass-panel p-8 feature-card bg-[#161b22]">
+                    <div
+                        class="w-14 h-14 rounded-lg bg-[#3b82f622] text-[#3b82f6] flex items-center justify-center text-2xl mb-6 shadow-[0_0_15px_rgba(59,130,246,0.2)]">
+                        <i class="fa-brands fa-facebook"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">FB Ads Hunter</h3>
+                    <p class="text-[#8b949e] text-sm leading-relaxed">Détectez les entreprises qui dépensent
+                        actuellement en publicité sur Meta. Parfait pour vendre des services de gestion de campagnes
+                        publicitaires.</p>
+                </div>
+
+                <div class="glass-panel p-8 feature-card bg-[#161b22]">
+                    <div
+                        class="w-14 h-14 rounded-lg bg-[#f8717122] text-[#f87171] flex items-center justify-center text-2xl mb-6 shadow-[0_0_15px_rgba(248,113,113,0.2)]">
+                        <i class="fa-solid fa-map-location-dot"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">OSM & Maps Engine</h3>
+                    <p class="text-[#8b949e] text-sm leading-relaxed">Scrapez OpenStreetMap et les annuaires locaux pour
+                        trouver des commerces physiques (Restos, Immo, Auto) ciblés par ville et pays.</p>
+                </div>
+
+                <div class="glass-panel p-8 feature-card bg-[#161b22]">
+                    <div
+                        class="w-14 h-14 rounded-lg bg-[#00e5a022] text-[#00e5a0] flex items-center justify-center text-2xl mb-6 shadow-[0_0_15px_rgba(0,229,160,0.2)]">
+                        <i class="fa-solid fa-brain"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Analyse</h3>
+                    <p class="text-[#8b949e] text-sm leading-relaxed">Chaque lead est scanné par IA pour déterminer son
+                        score de maturité digitale, son besoin principal et pour générer une accroche sur-mesure hyper
+                        personnalisée.</p>
+                </div>
+
+                <div class="glass-panel p-8 feature-card bg-[#161b22]">
+                    <div
+                        class="w-14 h-14 rounded-lg bg-[#f59e0b22] text-[#f59e0b] flex items-center justify-center text-2xl mb-6 shadow-[0_0_15px_rgba(245,158,11,0.2)]">
+                        <i class="fa-solid fa-envelope-open-text"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Email Crawler Intégré</h3>
+                    <p class="text-[#8b949e] text-sm leading-relaxed">Biound visite automatiquement les sites web
+                        détectés pour en extraire l'adresse de contact principale et enrichir votre CRM sans effort
+                        manuel.</p>
+                </div>
+
+                <div class="glass-panel p-8 feature-card bg-[#161b22]">
+                    <div
+                        class="w-14 h-14 rounded-lg bg-[#25d36622] text-[#25d366] flex items-center justify-center text-2xl mb-6 shadow-[0_0_15px_rgba(37,211,102,0.2)]">
+                        <i class="fa-brands fa-whatsapp"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">WhatsApp Auto</h3>
+                    <p class="text-[#8b949e] text-sm leading-relaxed">Lancez des campagnes d'envoi WhatsApp en 1 clic
+                        grâce aux liens pré-générés et au séquençage automatisé (via Web.whatsapp).</p>
+                </div>
+
+                <div class="glass-panel p-8 feature-card bg-[#161b22]">
+                    <div
+                        class="w-14 h-14 rounded-lg bg-[#a78bfa22] text-[#a78bfa] flex items-center justify-center text-2xl mb-6 shadow-[0_0_15px_rgba(167,139,250,0.2)]">
+                        <i class="fa-solid fa-clock"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Scheduler Autonome</h3>
+                    <p class="text-[#8b949e] text-sm leading-relaxed">Planifiez la prospection pendant que vous dormez.
+                        Le système tourne en arrière-plan et remplit votre dashboard chaque matin avec de nouveaux leads
+                        frais.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="py-24 px-4 relative overflow-hidden">
+        <div class="absolute inset-0 bg-[#161b22] -skew-y-3 z-0 origin-top-right scale-110"></div>
+        <div
+            class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#00e5a0] rounded-full blur-[150px] opacity-5 z-0">
+        </div>
+
+        <div class="max-w-5xl mx-auto relative z-10 text-center">
+            <h2 class="text-4xl font-bold mb-4">Investissez dans votre croissance.</h2>
+            <p class="text-[#8b949e] mb-16 text-lg">Un ROI imbattable. Un seul client signé avec l'outil rembourse votre
+                année entière.</p>
+
+            <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                <!-- Free Plan -->
+                <div class="glass-panel p-8 text-left border-[#30363d] bg-[#0d1117] flex flex-col h-full">
+                    <div class="mono text-xs font-bold text-[#8b949e] mb-2 tracking-wider">DÉCOUVERTE</div>
+                    <div class="flex items-end gap-2 mb-4">
+                        <h3 class="text-4xl font-bold">0€</h3>
+                        <span class="text-sm text-[#8b949e] font-normal mb-1">/ 7 jours</span>
+                    </div>
+                    <p class="text-[#8b949e] text-sm mb-6 pb-6 border-b border-[#30363d]">Idéal pour tester la puissance
+                        de frappe de Biound Pro.</p>
+                    <ul class="space-y-4 mb-8 text-sm flex-grow">
+                        <li class="flex items-start gap-3"><i class="fa-solid fa-check text-[#00e5a0] mt-1"></i>
+                            <span>Jusqu'à 100 Leads / jour</span>
+                        </li>
+                        <li class="flex items-start gap-3"><i class="fa-solid fa-check text-[#00e5a0] mt-1"></i>
+                            <span>OSM Hunter Uniquement</span>
+                        </li>
+                        <li class="flex items-start gap-3"><i class="fa-solid fa-check text-[#00e5a0] mt-1"></i>
+                            <span>50 Analyses IA incluses</span>
+                        </li>
+                        <li class="flex items-start gap-3 opacity-50"><i
+                                class="fa-solid fa-xmark text-red-500 mt-1"></i> <span
+                                class="line-through text-[#8b949e]">FB Ads Hunter & Annuaire</span></li>
+                    </ul>
+                    <a href="/app"
+                        class="block w-full text-center glass-panel border-[#30363d] hover:border-[#00e5a0] hover:text-[#00e5a0] text-white py-4 rounded-xl transition font-bold mt-auto">Essayer
+                        Gratuitement</a>
+                </div>
+
+                <!-- Pro Plan -->
+                <div
+                    class="glass-panel p-8 text-left border-[#00e5a0] bg-[#161b22] relative shadow-[0_0_30px_rgba(0,229,160,0.15)] flex flex-col h-full transform md:-translate-y-4">
+                    <div
+                        class="absolute top-0 right-0 bg-[#00e5a0] text-[#0d1117] mono text-xs font-bold px-4 py-1.5 rounded-bl-xl rounded-tr-xl">
+                        RECOMMANDÉ</div>
+                    <div class="mono text-xs flex items-center gap-2 text-[#00e5a0] mb-2 font-bold tracking-wider">
+                        <i class="fa-solid fa-crown"></i> AGENCE / SAAS
+                    </div>
+                    <div class="flex items-end gap-2 mb-4">
+                        <h3 class="text-4xl font-bold">49€</h3>
+                        <span class="text-sm text-[#8b949e] font-normal mb-1">/ mois sans engagement</span>
+                    </div>
+                    <p class="text-[#8b949e] text-sm mb-6 pb-6 border-b border-[#30363d]">Accès illimité à tous les
+                        moteurs, à l'IA et aux automatisations.</p>
+                    <ul class="space-y-4 mb-8 text-sm flex-grow">
+                        <li class="flex items-start gap-3"><i
+                                class="fa-solid fa-check text-[#00e5a0] mt-1 drop-shadow-[0_0_5px_rgba(0,229,160,0.5)]"></i>
+                            <span class="font-bold text-white">Recherche de Leads Illimitée</span>
+                        </li>
+                        <li class="flex items-start gap-3"><i
+                                class="fa-solid fa-check text-[#00e5a0] mt-1 drop-shadow-[0_0_5px_rgba(0,229,160,0.5)]"></i>
+                            <span>Tous les Hunters (OSM + Meta + Annuaire)</span>
+                        </li>
+                        <li class="flex items-start gap-3"><i
+                                class="fa-solid fa-check text-[#00e5a0] mt-1 drop-shadow-[0_0_5px_rgba(0,229,160,0.5)]"></i>
+                            <span>Intelligence Artificielle Illimitée</span>
+                        </li>
+                        <li class="flex items-start gap-3"><i
+                                class="fa-solid fa-check text-[#00e5a0] mt-1 drop-shadow-[0_0_5px_rgba(0,229,160,0.5)]"></i>
+                            <span>Email Crawler & Auto WhatsApp</span>
+                        </li>
+                        <li class="flex items-start gap-3"><i
+                                class="fa-solid fa-check text-[#00e5a0] mt-1 drop-shadow-[0_0_5px_rgba(0,229,160,0.5)]"></i>
+                            <span>Scheduler Autonome (Tourne H24)</span>
+                        </li>
+                        <li class="flex items-start gap-3"><i
+                                class="fa-solid fa-check text-[#00e5a0] mt-1 drop-shadow-[0_0_5px_rgba(0,229,160,0.5)]"></i>
+                            <span>Webhooks Zapier & Make <span
+                                    class="text-[10px] bg-[#00e5a022] text-[#00e5a0] px-1 rounded ml-1">NEW</span></span>
+                        </li>
+                    </ul>
+                    <a href="/app"
+                        class="block w-full text-center bg-[#00e5a0] hover:bg-[#00ffb2] text-[#0d1117] py-4 rounded-xl transition font-bold text-lg btn-glow mt-auto">Accéder
+                        à la plateforme</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t border-[#30363d] py-12 px-4 bg-[#0d1117]">
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="flex items-center gap-3 text-[#00e5a0]">
+                <div class="w-2 h-2 rounded-full" style="background:#00e5a0; box-shadow: 0 0 8px #00e5a0;"></div>
+                <span class="font-bold tracking-widest text-[#00e5a0]">BIOUND <span class="text-white">PRO</span></span>
+            </div>
+            <div class="text-[#8b949e] text-sm">
+                &copy; 2026 Sawa Tech. Tous droits réservés. Outil de prospection B2B.
+            </div>
+            <div class="flex gap-4 text-[#8b949e]">
+                <a href="#" class="hover:text-white transition"><i class="fa-brands fa-linkedin text-xl"></i></a>
+                <a href="#" class="hover:text-white transition"><i class="fa-brands fa-twitter text-xl"></i></a>
+                <a href="#" class="hover:text-white transition"><i class="fa-solid fa-envelope text-xl"></i></a>
+            </div>
+        </div>
+    </footer>
+
+</body>
+
+</html>
