@@ -3,8 +3,8 @@ import json
 import platform
 import os
 import requests
-import webbrowser
-import pyautogui
+# import webbrowser
+# import pyautogui  # DÉSACTIVÉ POUR LE SAAS (Crash sur VPS sans écran)
 from flask import Flask, request, jsonify, Response, stream_with_context, send_from_directory
 from flask_cors import CORS
 from colorama import init, Fore, Style
@@ -482,12 +482,14 @@ def send_whatsapp():
     for index, lead in enumerate(leads):
         number = lead.get('number')
 
-        # Ouvrir WhatsApp en premier
-        webbrowser.open(lead['wa_link'])
-        time.sleep(8)
-        pyautogui.press('enter')
-        time.sleep(2)
-        pyautogui.hotkey(hotkey, 'w')
+        # --- DÉSACTIVÉ POUR LE SAAS ---
+        # L'automatisation WhatsApp se fait désormais manuellement ou par une API officielle,
+        # car un VPS n'a pas d'écran pour utiliser pyautogui.
+        # webbrowser.open(lead['wa_link'])
+        # time.sleep(8)
+        # pyautogui.press('enter')
+        # time.sleep(2)
+        # pyautogui.hotkey(hotkey, 'w')
 
         # BUG FIX #5 : statut mis à jour APRÈS l'envoi
         if number:
