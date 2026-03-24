@@ -30,7 +30,6 @@ CORS(app)
 # CONFIGURATION
 # ============================================================
 META_ACCESS_TOKEN = os.environ.get("META_TOKEN", "COLLE_TON_TOKEN_ICI")
-GEMINI_API_KEY    = os.environ.get("GEMINI_API_KEY")
 GROQ_API_KEY      = os.environ.get("GROQ_API_KEY")
 
 # ============================================================
@@ -309,10 +308,9 @@ def annuaire_hunt():
 
 
 # ============================================================
-# MODULE 3 : ANALYSE IA — Groq (LLaMA 3) + Gemini Fallback
+# MODULE 3 : ANALYSE IA — Groq (LLaMA 3.3 70B)
 # ============================================================
 
-GEMINI_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent"
 GROQ_URL   = "https://api.groq.com/openai/v1/chat/completions"
 GROQ_MODEL = "llama-3.3-70b-versatile"
 
@@ -336,8 +334,10 @@ FALLBACK_RESPONSE = {
     "accroche": "Bonjour, j'ai vu votre activité. On peut vous aider à développer votre présence en ligne ?"
 }
 
-def call_groq(context: str) -> dict:
-    """Appelle Groq API (LLaMA 3) pour analyser un lead."""
+def call_ai(context: str) -> dict:
+    """Appelle Groq API (LLaMA 3.3 70B) pour analyser un lead."""
+    if not GROQ_API_KEY:
+        raise ValueError("GROQ_API_KEY manquante dans le fichier .env")
     prompt = ANALYSIS_PROMPT.format(context=context[:500])
     headers = {
         "Authorization": f"Bearer {GROQ_API_KEY}",
@@ -356,28 +356,6 @@ def call_groq(context: str) -> dict:
     clean = raw.strip().lstrip("```json").lstrip("```").rstrip("```").strip()
     return json.loads(clean)
 
-def call_gemini(context: str) -> dict:
-    """Appelle Gemini Flash (fallback si Groq non configuré)."""
-    prompt  = ANALYSIS_PROMPT.format(context=context[:500])
-    payload = {
-        "contents": [{"parts": [{"text": prompt}]}],
-        "generationConfig": {"temperature": 0.2, "maxOutputTokens": 300, "responseMimeType": "application/json"}
-    }
-    resp  = requests.post(f"{GEMINI_URL}?key={GEMINI_API_KEY}", json=payload, timeout=15)
-    resp.raise_for_status()
-    raw   = resp.json()["candidates"][0]["content"]["parts"][0]["text"]
-    clean = raw.strip().lstrip("```json").lstrip("```").rstrip("```").strip()
-    return json.loads(clean)
-
-def call_ai(context: str) -> dict:
-    """Point d'entrée unique : utilise Groq si clé disponible, sinon Gemini."""
-    if GROQ_API_KEY:
-        return call_groq(context)
-    elif GEMINI_API_KEY:
-        return call_gemini(context)
-    else:
-        raise ValueError("Aucune clé IA configurée (GROQ_API_KEY ou GEMINI_API_KEY manquante)")
-
 
 @app.route('/analyze_lead', methods=['POST'])
 def analyze_lead():
@@ -387,8 +365,7 @@ def analyze_lead():
 
     try:
         result = call_ai(context)
-        provider = "Groq" if GROQ_API_KEY else "Gemini"
-        print(Fore.GREEN + f"✅ {provider} → {result.get('business_category')} | score {result.get('score')}/10")
+        print(Fore.GREEN + f"✅ Groq → {result.get('business_category')} | score {result.get('score')}/10")
 
         # BUG FIX #4 : on sauvegarde dans ai_accroche (colonne dédiée) ET product
         if number:
@@ -406,14 +383,14 @@ def analyze_lead():
 
     except ValueError as e:
         print(Fore.YELLOW + f"⚠️  {e}")
-        return jsonify({**FALLBACK_RESPONSE, "besoin": "Clé Gemini manquante"}), 200
+        return jsonify({**FALLBACK_RESPONSE, "besoin": "Clé Groq manquante"}), 200
     except requests.exceptions.HTTPError as e:
         code = e.response.status_code
-        msg  = {429: "Quota Gemini atteint"}.get(code, f"Gemini HTTP {code}")
+        msg  = {429: "Quota Groq atteint"}.get(code, f"Groq HTTP {code}")
         print(Fore.YELLOW + f"⚠️  {msg}")
         return jsonify({**FALLBACK_RESPONSE, "besoin": msg}), 200
     except (json.JSONDecodeError, KeyError) as e:
-        print(Fore.RED + f"❌ Parsing Gemini : {e}")
+        print(Fore.RED + f"❌ Parsing Groq : {e}")
         return jsonify(FALLBACK_RESPONSE), 200
     except Exception as e:
         print(Fore.RED + f"❌ Erreur inattendue : {e}")
