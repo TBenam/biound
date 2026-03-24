@@ -31,6 +31,7 @@ CORS(app)
 # ============================================================
 META_ACCESS_TOKEN = os.environ.get("META_TOKEN", "COLLE_TON_TOKEN_ICI")
 GEMINI_API_KEY    = os.environ.get("GEMINI_API_KEY")
+GROQ_API_KEY      = os.environ.get("GROQ_API_KEY")
 
 # ============================================================
 # ROUTES STATIQUES
@@ -308,10 +309,12 @@ def annuaire_hunt():
 
 
 # ============================================================
-# MODULE 3 : ANALYSE IA — Gemini Flash 2.0
+# MODULE 3 : ANALYSE IA — Groq (LLaMA 3) + Gemini Fallback
 # ============================================================
 
 GEMINI_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent"
+GROQ_URL   = "https://api.groq.com/openai/v1/chat/completions"
+GROQ_MODEL = "llama-3.3-70b-versatile"
 
 ANALYSIS_PROMPT = """Tu es un expert en prospection B2B pour l'espace francophone (Afrique, Europe, Canada).
 
@@ -333,7 +336,28 @@ FALLBACK_RESPONSE = {
     "accroche": "Bonjour, j'ai vu votre activité. On peut vous aider à développer votre présence en ligne ?"
 }
 
+def call_groq(context: str) -> dict:
+    """Appelle Groq API (LLaMA 3) pour analyser un lead."""
+    prompt = ANALYSIS_PROMPT.format(context=context[:500])
+    headers = {
+        "Authorization": f"Bearer {GROQ_API_KEY}",
+        "Content-Type": "application/json"
+    }
+    payload = {
+        "model": GROQ_MODEL,
+        "messages": [{"role": "user", "content": prompt}],
+        "temperature": 0.2,
+        "max_tokens": 300,
+        "response_format": {"type": "json_object"}
+    }
+    resp = requests.post(GROQ_URL, json=payload, headers=headers, timeout=15)
+    resp.raise_for_status()
+    raw = resp.json()["choices"][0]["message"]["content"]
+    clean = raw.strip().lstrip("```json").lstrip("```").rstrip("```").strip()
+    return json.loads(clean)
+
 def call_gemini(context: str) -> dict:
+    """Appelle Gemini Flash (fallback si Groq non configuré)."""
     prompt  = ANALYSIS_PROMPT.format(context=context[:500])
     payload = {
         "contents": [{"parts": [{"text": prompt}]}],
@@ -345,6 +369,15 @@ def call_gemini(context: str) -> dict:
     clean = raw.strip().lstrip("```json").lstrip("```").rstrip("```").strip()
     return json.loads(clean)
 
+def call_ai(context: str) -> dict:
+    """Point d'entrée unique : utilise Groq si clé disponible, sinon Gemini."""
+    if GROQ_API_KEY:
+        return call_groq(context)
+    elif GEMINI_API_KEY:
+        return call_gemini(context)
+    else:
+        raise ValueError("Aucune clé IA configurée (GROQ_API_KEY ou GEMINI_API_KEY manquante)")
+
 
 @app.route('/analyze_lead', methods=['POST'])
 def analyze_lead():
@@ -353,8 +386,9 @@ def analyze_lead():
     number  = data.get('number', '')
 
     try:
-        result = call_gemini(context)
-        print(Fore.GREEN + f"✅ Gemini → {result.get('business_category')} | score {result.get('score')}/10")
+        result = call_ai(context)
+        provider = "Groq" if GROQ_API_KEY else "Gemini"
+        print(Fore.GREEN + f"✅ {provider} → {result.get('business_category')} | score {result.get('score')}/10")
 
         # BUG FIX #4 : on sauvegarde dans ai_accroche (colonne dédiée) ET product
         if number:
