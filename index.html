@@ -480,21 +480,21 @@
             </div>
             <!-- KPIs -->
             <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-5">
-                <div class="p-3 rounded-lg text-center" style="background:#0d1117;border:1px solid #21262d;">
+                <div class="p-3 rounded-lg text-center cursor-pointer transition hover:border-[#00e5a0]" style="background:#0d1117;border:1px solid #21262d;" onclick="scrollToLeads('all')" title="Voir tous les leads">
                     <div class="mono font-bold text-2xl" id="kpi-total" style="color:var(--accent);">0</div>
-                    <div class="mono text-xs mt-1" style="color:#8b949e;">TOTAL LEADS</div>
+                    <div class="mono text-xs mt-1" style="color:#8b949e;">TOTAL LEADS ↗</div>
                 </div>
-                <div class="p-3 rounded-lg text-center" style="background:#0d1117;border:1px solid #21262d;">
+                <div class="p-3 rounded-lg text-center cursor-pointer transition hover:border-[#3b82f6]" style="background:#0d1117;border:1px solid #21262d;" onclick="scrollToLeads('analyzed')" title="Voir les leads analysés">
                     <div class="mono font-bold text-2xl" id="kpi-analysis" style="color:var(--accent2);">0%</div>
-                    <div class="mono text-xs mt-1" style="color:#8b949e;">TAUX ANALYSE</div>
+                    <div class="mono text-xs mt-1" style="color:#8b949e;">TAUX ANALYSE ↗</div>
                 </div>
-                <div class="p-3 rounded-lg text-center" style="background:#0d1117;border:1px solid #21262d;">
+                <div class="p-3 rounded-lg text-center cursor-pointer transition hover:border-[#60a5fa]" style="background:#0d1117;border:1px solid #21262d;" onclick="scrollToLeads('email')" title="Voir les leads avec email">
                     <div class="mono font-bold text-2xl" id="kpi-email" style="color:#60a5fa;">0%</div>
-                    <div class="mono text-xs mt-1" style="color:#8b949e;">TAUX EMAIL</div>
+                    <div class="mono text-xs mt-1" style="color:#8b949e;">TAUX EMAIL ↗</div>
                 </div>
-                <div class="p-3 rounded-lg text-center" style="background:#0d1117;border:1px solid #21262d;">
+                <div class="p-3 rounded-lg text-center cursor-pointer transition hover:border-[#34d399]" style="background:#0d1117;border:1px solid #21262d;" onclick="scrollToLeads('converted')" title="Voir les leads convertis">
                     <div class="mono font-bold text-2xl" id="kpi-conversion" style="color:#34d399;">0%</div>
-                    <div class="mono text-xs mt-1" style="color:#8b949e;">CONVERSION</div>
+                    <div class="mono text-xs mt-1" style="color:#8b949e;">CONVERSION ↗</div>
                 </div>
             </div>
             <!-- Pipeline + Sparkline -->
@@ -789,7 +789,7 @@
         async function loadDashboard() {
             const country = getSelectedCountries().join(',');
             try {
-                const r = await fetch(`http://localhost:5000/api/dashboard?country=${country}`);
+                const r = await fetch(`/api/dashboard?country=${country}`);
                 const d = await r.json();
                 console.log("Dashboard Data:", d);
 
@@ -835,8 +835,8 @@
                     if (!cat) return;
                     const pct = Math.round(count / maxCat * 100);
                     catBars.innerHTML += `
-                        <div class="flex items-center gap-2">
-                            <span class="mono" style="font-size:9px;color:#8b949e;min-width:72px;text-align:right;">${cat}</span>
+                        <div class="flex items-center gap-2 cursor-pointer group" onclick="scrollToLeads('cat:${cat}')" title="Filtrer par ${cat}">
+                            <span class="mono group-hover:text-[#00e5a0] transition" style="font-size:9px;color:#8b949e;min-width:72px;text-align:right;">${cat}</span>
                             <div class="flex-1 score-bar" style="height:6px;">
                                 <div class="score-fill" style="width:${pct}%;background:#00e5a0;transition:width .5s;"></div>
                             </div>
@@ -945,7 +945,7 @@
             const country = getSelectedCountries().join(',');
             activeFilter = category;
             try {
-                const r = await fetch(`http://localhost:5000/api/leads?country=${country}&category=${category}`);
+                const r = await fetch(`/api/leads?country=${country}&category=${category}`);
                 const data = await r.json();
                 leadsData = data;
                 document.getElementById('leadsList').innerHTML = '';
@@ -975,7 +975,7 @@
 
         async function checkTokenStatus() {
             try {
-                await fetch('http://localhost:5000/');
+                await fetch('/');
                 document.getElementById('tokenStatus').style.color = '#00e5a0';
                 document.getElementById('tokenStatus').textContent = 'SERVER OK';
                 document.getElementById('stopGlobalBtn').classList.add('hidden');
@@ -1021,7 +1021,7 @@
         // ============================================================
         async function loadSchedulerStatus() {
             try {
-                const r = await fetch('http://localhost:5000/api/scheduler');
+                const r = await fetch('/api/scheduler');
                 const data = await r.json();
 
                 const dot = document.getElementById('schedDot');
@@ -1058,7 +1058,7 @@
             const country = document.getElementById('targetCountry').value;
 
             try {
-                await fetch('http://localhost:5000/api/scheduler/config', {
+                await fetch('/api/scheduler/config', {
                     method: 'POST', headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ hour, minute, countries: [country] })
                 });
@@ -1072,7 +1072,7 @@
             btn.disabled = true;
             btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-1"></i>EN COURS...';
             try {
-                await fetch('http://localhost:5000/api/scheduler/trigger', { method: 'POST' });
+                await fetch('/api/scheduler/trigger', { method: 'POST' });
                 showToast('🚀 Session de prospection lancée en arrière-plan !', 'success');
                 // Recharger les leads après un délai (les jobs tournent en async)
                 setTimeout(() => loadLeadsFromDB(), 30000);
@@ -1139,7 +1139,7 @@
                 if (!isHunting) break;
                 showToast(`🚀 Hunting FB Ads : ${country}...`);
                 try {
-                    const response = await fetch('http://localhost:5000/auto_hunt', {
+                    const response = await fetch('/auto_hunt', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ country }),
@@ -1184,7 +1184,7 @@
                 if (!isHunting) break;
                 showToast(`🗺️ Hunting OSM : ${country}...`);
                 try {
-                    const response = await fetch('http://localhost:5000/maps_hunt', {
+                    const response = await fetch('/maps_hunt', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ country }),
@@ -1229,7 +1229,7 @@
                 if (!isHunting) break;
                 showToast(`📒 Scraping Annuaire : ${country}...`);
                 try {
-                    const response = await fetch('http://localhost:5000/annuaire_hunt', {
+                    const response = await fetch('/annuaire_hunt', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ country }),
@@ -1280,7 +1280,7 @@
             let done = 0, total = 0;
 
             try {
-                const response = await fetch('http://localhost:5000/crawl_emails_batch', {
+                const response = await fetch('/crawl_emails_batch', {
                     method: 'POST', headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ country })
                 });
@@ -1328,7 +1328,7 @@
             if (btn) { btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>'; }
 
             try {
-                const r = await fetch('http://localhost:5000/crawl_email', {
+                const r = await fetch('/crawl_email', {
                     method: 'POST', headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ number, website })
                 });
@@ -1375,31 +1375,40 @@
             const countries = getSelectedCountries();
             if (countries.length === 0) return;
 
-            // BUG FIX #1 : source 'osm' (plus 'google_maps')
-            if ((data.source === 'osm') && data.phone) {
-                const clean = data.phone.replace(/\D/g, '');
-                if (clean.length >= 8) {
-                    // Trouver le bon pays pour ce numéro (on suppose que le premier qui matche ou le pays de la requete OSM est bon)
-                    let matchedCountry = countries[0];
-                    let finalNumber = clean;
-                    for (const c of countries) {
-                        const cfg = COUNTRY_CONFIG[c];
-                        if (clean.startsWith(cfg.code) || clean.length === cfg.length) {
-                            matchedCountry = c;
-                            finalNumber = '+' + (clean.startsWith(cfg.code) ? clean : cfg.code + clean);
-                            break;
-                        }
-                    }
-                    if (!finalNumber.startsWith('+')) finalNumber = '+' + finalNumber;
+            // OSM & Annuaire : accepter même sans numéro de téléphone
+            if (data.source === 'osm' || data.source === 'annuaire') {
+                let finalNumber = null;
+                let matchedCountry = countries[0];
 
-                    await _saveLead({
-                        number: finalNumber, source: 'osm', country: matchedCountry,
-                        name: data.name || '', website: data.website || '',
-                        city: data.city || '', category: data.category || 'autre',
-                        product: data.name || 'Business local',
-                        context: data.text || '', address: data.address || ''
-                    });
+                if (data.phone) {
+                    const clean = data.phone.replace(/\D/g, '');
+                    if (clean.length >= 8) {
+                        for (const c of countries) {
+                            const cfg = COUNTRY_CONFIG[c];
+                            if (clean.startsWith(cfg.code) || clean.length === cfg.length) {
+                                matchedCountry = c;
+                                finalNumber = '+' + (clean.startsWith(cfg.code) ? clean : cfg.code + clean);
+                                break;
+                            }
+                        }
+                        if (!finalNumber) finalNumber = '+' + clean;
+                    }
                 }
+
+                // Si pas de téléphone valide, utiliser le nom + ville comme identifiant unique
+                if (!finalNumber) {
+                    if (!data.name) return; // pas de nom = vraiment rien à sauvegarder
+                    const slug = (data.name + '_' + (data.city || '')).toLowerCase().replace(/\s+/g, '_').replace(/[^a-z0-9_]/g, '').substring(0, 30);
+                    finalNumber = 'osm_' + slug + '_' + Math.random().toString(36).substring(2, 6);
+                }
+
+                await _saveLead({
+                    number: finalNumber, source: data.source, country: matchedCountry,
+                    name: data.name || '', website: data.website || '',
+                    city: data.city || '', category: data.category || 'autre',
+                    product: data.name || 'Business local',
+                    context: data.text || '', address: data.address || ''
+                });
                 return;
             }
 
@@ -1420,7 +1429,7 @@
                             name: '', website: '', city: '', category: 'autre',
                             product: 'En attente...', context: (data.text || '').substring(0, 500)
                         });
-                        break; // Stop if it matched a country
+                        break;
                     }
                 }
             }
@@ -1429,7 +1438,7 @@
         async function _saveLead(lead) {
             if (leadsData.some(l => l.number === lead.number)) return;
             try {
-                const r = await fetch('http://localhost:5000/api/leads', {
+                const r = await fetch('/api/leads', {
                     method: 'POST', headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(lead)
                 });
@@ -1562,7 +1571,7 @@
             const timeline = document.getElementById(`timeline-${safeId}`);
             timeline.innerHTML = '<div class="text-[10px] text-gray-600 mono">Chargement...</div>';
             try {
-                const r = await fetch(`http://localhost:5000/api/interactions/${encodeURIComponent(number)}`);
+                const r = await fetch(`/api/interactions/${encodeURIComponent(number)}`);
                 const data = await r.json();
                 if (data.length === 0) {
                     timeline.innerHTML = '<div class="text-[10px] text-gray-600 mono">Aucune interaction</div>';
@@ -1586,7 +1595,7 @@
             const note = input.value.trim();
             if (!note) return;
             try {
-                await fetch('http://localhost:5000/api/interactions', {
+                await fetch('/api/interactions', {
                     method: 'POST', headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ number, type: 'Note', note })
                 });
@@ -1607,7 +1616,7 @@
             btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-1"></i> ANALYSE...';
 
             try {
-                const r = await fetch('http://localhost:5000/analyze_lead', {
+                const r = await fetch('/analyze_lead', {
                     method: 'POST', headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ context: lead.context, number: lead.number })
                 });
@@ -1694,6 +1703,46 @@
             loadLeadsFromDB(cat);
         }
 
+        // Scroll vers la liste des leads avec un filtre appliqué
+        function scrollToLeads(filter) {
+            if (filter === 'all') {
+                loadLeadsFromDB('all');
+            } else if (filter === 'analyzed') {
+                // Afficher uniquement les leads analysés
+                loadLeadsFromDB('all').then(() => {
+                    document.querySelectorAll('.lead-card').forEach(c => {
+                        if (!c.classList.contains('analyzed')) c.style.display = 'none';
+                    });
+                });
+            } else if (filter === 'email') {
+                // Afficher uniquement les leads avec email
+                loadLeadsFromDB('all').then(() => {
+                    document.querySelectorAll('.lead-card').forEach(c => {
+                        const safeId = c.id.replace('card-', '');
+                        const emailBox = document.getElementById(`emailbox-${safeId}`);
+                        if (!emailBox || emailBox.classList.contains('hidden')) c.style.display = 'none';
+                    });
+                });
+            } else if (filter === 'converted') {
+                loadLeadsFromDB('all').then(() => {
+                    document.querySelectorAll('.lead-card').forEach(c => {
+                        const safeId = c.id.replace('card-', '');
+                        const sel = document.getElementById(`status-${safeId}`);
+                        if (!sel || sel.value !== 'Converti') c.style.display = 'none';
+                    });
+                });
+            } else if (filter.startsWith('cat:')) {
+                loadLeadsFromDB(filter.replace('cat:', ''));
+            }
+            // Scroll vers la section résultats
+            setTimeout(() => {
+                const area = document.getElementById('resultsArea');
+                if (area && !area.classList.contains('hidden')) {
+                    area.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            }, 300);
+        }
+
         // ============================================================
         // ACTIONS
         // ============================================================
@@ -1712,7 +1761,7 @@
             const lead = leadsData.find(l => l.number === number);
             if (lead) lead.status = newStatus;
             try {
-                await fetch('http://localhost:5000/api/leads/update', {
+                await fetch('/api/leads/update', {
                     method: 'POST', headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ number, status: newStatus })
                 });
@@ -1722,7 +1771,7 @@
 
         async function del(number) {
             try {
-                await fetch('http://localhost:5000/api/leads/delete', {
+                await fetch('/api/leads/delete', {
                     method: 'POST', headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ number })
                 });
@@ -1768,7 +1817,7 @@
             };
             showToast('🤖 Robot activé. Ne touchez plus à rien !', 'success');
             try {
-                const r = await fetch('http://localhost:5000/send_whatsapp', {
+                const r = await fetch('/send_whatsapp', {
                     method: 'POST', headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(payload)
                 });
