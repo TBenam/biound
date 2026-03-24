@@ -639,7 +639,7 @@ if __name__ == '__main__':
     print(Fore.GREEN + """
 ╔══════════════════════════════════════╗
 ║   BIOUND PRO v5.3 - SAWA TECH       ║
-║   Meta + OSM + Gemini + Scheduler   ║
+║   Meta + OSM + Groq + Scheduler     ║
 ╚══════════════════════════════════════╝
     """)
 
@@ -649,10 +649,10 @@ if __name__ == '__main__':
 
     print(Fore.GREEN + "✅ OSM Hunter actif — Overpass API, zéro clé requise")
 
-    if GEMINI_API_KEY == "COLLE_TA_CLE_GEMINI_ICI":
-        print(Fore.YELLOW + "⚠️  GEMINI_API_KEY manquante → Analyse IA désactivée")
+    if not GROQ_API_KEY:
+        print(Fore.YELLOW + "⚠️  GROQ_API_KEY manquante dans .env → Analyse IA en échec possible")
     else:
-        print(Fore.GREEN + "✅ Gemini Flash 2.0 actif — ~1s/analyse, 1500 req/jour gratuits")
+        print(Fore.GREEN + "✅ Groq LLaMA 3.3 actif — ~1s/analyse, API externe gratuite")
 
     print(Fore.GREEN + "✅ Email Crawler actif — BeautifulSoup, zéro clé requise")
     print(Fore.GREEN + f"✅ Scheduler actif — lancement quotidien à {sched.SCHEDULE_HOUR:02d}:{sched.SCHEDULE_MINUTE:02d}\n")
